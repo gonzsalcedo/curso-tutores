@@ -56,6 +56,20 @@ fbq('track', 'PageView');`}
             alt=""
           />
         </noscript>
+
+        {/* Google Analytics (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-52ZBRL8QM0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-52ZBRL8QM0');
+          `}
+        </Script>
       </body>
     </html>
   );
