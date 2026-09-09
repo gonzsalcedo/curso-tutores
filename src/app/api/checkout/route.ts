@@ -20,6 +20,8 @@ export async function POST(req: Request) {
 
     const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
+    const productImages = origin && origin.startsWith("https://") ? [`${origin}/gonzalo-salcedo-office.webp`] : [];
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -29,7 +31,7 @@ export async function POST(req: Request) {
             product_data: {
               name: courseTitle,
               description: "Acceso completo e ilimitado al programa de creación y venta de cursos digitales.",
-              images: [`${origin}/gonzalo-salcedo-office.webp`],
+              ...(productImages.length > 0 ? { images: productImages } : {}),
             },
             unit_amount: price * 100, // centavos
           },
