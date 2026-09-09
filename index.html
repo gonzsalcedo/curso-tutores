@@ -1057,12 +1057,27 @@
   <!-- ======================================================================= -->
   <!-- FOOTER & AVISO LEGAL                                                    -->
   <!-- ======================================================================= -->
-  <footer class="py-8 px-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white">
-    <div class="max-w-2xl mx-auto space-y-3">
-      <p class="text-slate-600">
+  <footer class="py-10 px-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white">
+    <div class="max-w-3xl mx-auto space-y-4">
+      
+      <!-- Enlaces Legales y de Navegación -->
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-600">
+        <a href="/terminos" class="hover:text-blue-700 transition-colors">Términos y Condiciones</a>
+        <span class="text-slate-300">•</span>
+        <a href="/privacidad" class="hover:text-blue-700 transition-colors">Política de Privacidad</a>
+        <span class="text-slate-300">•</span>
+        <a href="/cursos/login" class="hover:text-blue-700 transition-colors">Acceso a Alumnos</a>
+        <span class="text-slate-300">•</span>
+        <a href="#" onclick="handleWhatsAppSupport(event, 'footer_support')" class="hover:text-emerald-700 transition-colors inline-flex items-center gap-1">
+          <span>WhatsApp de Soporte</span>
+        </a>
+      </div>
+
+      <p class="text-slate-500">
         © <span id="current-year"></span> Programa Digital Escalable con Gonzalo Salcedo. Todos los derechos reservados.
       </p>
-      <p class="text-[11px] leading-relaxed text-slate-400">
+
+      <p class="text-[11px] leading-relaxed text-slate-400 max-w-2xl mx-auto">
         Descargo de responsabilidad: Este sitio web no forma parte de Meta Platforms, Inc. ni de Facebook Inc. Además, este sitio NO está respaldado por Meta ni Facebook de ninguna manera. FACEBOOK es una marca comercial de META PLATFORMS, Inc. Los resultados varían según el esfuerzo, la habilidad y la dedicación de cada persona.
       </p>
     </div>
