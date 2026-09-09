@@ -224,36 +224,57 @@
           <div class="relative rounded-2xl sm:rounded-3xl p-2 sm:p-3 bg-white border border-slate-200 shadow-xl">
             <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-100 group cursor-pointer" onclick="startVideoDemo()">
               
-              <!-- Video Cover con Thumbnail Real y Botón Play Prominente -->
-              <div id="vsl-cover" class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer select-none">
-                <!-- Imagen Miniatura Real del Video -->
-                <img src="/video-thumbnail.png" 
-                     alt="Miniatura del Video Demostración" 
-                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <!-- Video Cover Atractivo con Textos, Iluminación y Botón Play -->
+              <div id="vsl-cover" class="absolute inset-0 z-10 flex flex-col items-center justify-between p-5 sm:p-8 text-center cursor-pointer select-none bg-gradient-to-br from-slate-950 via-[#0B1528] to-slate-950 overflow-hidden group">
+                
+                <!-- Efectos de Iluminación Ambiental y Malla de Fondo -->
+                <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-blue-500/15 blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-emerald-500/15 blur-3xl pointer-events-none"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none"></div>
 
-                <!-- Overlay sutil para destacar el botón play sin oscurecer la miniatura -->
-                <div class="absolute inset-0 bg-slate-950/25 group-hover:bg-slate-950/15 transition-colors"></div>
-
-                <!-- Badge Superior del Video -->
-                <div class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/20 text-white text-xs font-semibold mb-3 backdrop-blur-md shadow-md">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                  <span>DEMOSTRACIÓN RÁPIDA (3 MINUTOS)</span>
+                <!-- 1. Badge Superior Destacado -->
+                <div class="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs sm:text-sm font-semibold backdrop-blur-md shadow-lg">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span class="tracking-wide">DEMOSTRACIÓN RÁPIDA (3 MINUTOS)</span>
                 </div>
 
-                <!-- Botón Play Destacado -->
-                <button type="button" 
-                        onclick="event.stopPropagation(); startVideoDemo();"
-                        aria-label="Reproducir video de demostración"
-                        class="relative z-10 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-600 group-hover:bg-emerald-500 text-white shadow-2xl shadow-emerald-950/50 group-hover:scale-110 active:scale-95 transition-all duration-300">
-                  <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </button>
+                <!-- 2. Centro: Título Potente y Botón Play Radiante -->
+                <div class="relative z-10 max-w-xl mx-auto my-auto flex flex-col items-center space-y-3 sm:space-y-4">
+                  <h3 class="text-lg sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                    Descubre el sistema para convertir tu conocimiento en un <span class="text-emerald-400">curso digital automatizado</span>
+                  </h3>
+                  
+                  <!-- Botón Play con Efecto Ripple / Glow -->
+                  <div class="relative pt-1">
+                    <div class="absolute inset-0 rounded-full bg-emerald-500/30 animate-ping"></div>
+                    <button type="button" 
+                            onclick="event.stopPropagation(); startVideoDemo();"
+                            aria-label="Reproducir video de demostración"
+                            class="relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-[0_0_35px_rgba(16,185,129,0.5)] group-hover:scale-110 active:scale-95 transition-all duration-300">
+                      <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </button>
+                  </div>
 
-                <!-- Microtexto inferior amigable -->
-                <div class="relative z-10 mt-3 px-3.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-xs text-white font-medium shadow-sm">
-                  Haz clic para ver el recorrido por dentro ▶
+                  <p class="text-xs text-slate-300 font-medium pt-1">
+                    Haz clic en cualquier parte para ver la clase por dentro ▶
+                  </p>
                 </div>
+
+                <!-- 3. Micro-badges Inferiores de Beneficios -->
+                <div class="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs text-slate-300 font-medium">
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
+                    <span class="text-emerald-400 font-bold">✓</span> Sin llamadas 1 a 1
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
+                    <span class="text-emerald-400 font-bold">✓</span> Sistema de alumnos en vivo
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
+                    <span class="text-emerald-400 font-bold">✓</span> Método paso a paso
+                  </span>
+                </div>
+
               </div>
 
               <!-- Contenedor iframe para video real de Bunny.net Stream -->
