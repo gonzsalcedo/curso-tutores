@@ -161,9 +161,12 @@ export default function AdminCoursesPage() {
                   {course.description || "Sin descripción establecida."}
                 </p>
 
-                <div className="mt-4 flex items-center gap-2">
+                <div className="mt-4 flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-bold text-emerald-400 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
-                    ${(course.price || 3500).toLocaleString("es-MX")} MXN
+                    Valor: ${(course.price || 3500).toLocaleString("es-MX")} MXN
+                  </span>
+                  <span className="text-[10px] font-semibold text-blue-400 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">
+                    Incluido en Acceso Total
                   </span>
                 </div>
               </div>
@@ -241,11 +244,13 @@ export default function AdminCoursesPage() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Precio (MXN)
+                  Precio o Valor de Referencia (MXN)
+                  <span className="ml-2 text-[10px] font-normal text-slate-400">
+                    (Informativo: tus alumnos tienen Acceso Total a todos los cursos)
+                  </span>
                 </label>
                 <input
                   type="number"
-                  required
                   value={price}
                   onChange={(e) => setPrice(Number(e.target.value))}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500"
