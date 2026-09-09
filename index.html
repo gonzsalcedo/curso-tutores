@@ -140,7 +140,7 @@
     const WHATSAPP_SUPPORT_URL = 'https://wa.me/521XXXXXXXXXX?text=Hola%20Gonzalo,%20tengo%20una%20duda%20antes%20de%20inscribirme%20al%20Programa%20Digital%20Escalable';
 
     // 3. ID DE META PIXEL
-    const META_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // <-- Inserta tu ID (ej: '987654321012345')
+    const META_PIXEL_ID = '2140367103553718';
 
     // 4. PRECIO DEL CURSO PARA EVENTO DE TRACKING
     const COURSE_PRICE = 3500.00;
@@ -155,16 +155,12 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     
-    if (META_PIXEL_ID && META_PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
-      fbq('init', META_PIXEL_ID);
-      fbq('track', 'PageView');
-    } else {
-      console.warn('⚠️ Meta Pixel ID no configurado aún en index.html');
-    }
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
   </script>
   <noscript>
     <img height="1" width="1" style="display:none" 
-         src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/>
+         src="https://www.facebook.com/tr?id=2140367103553718&ev=PageView&noscript=1"/>
   </noscript>
 </head>
 
