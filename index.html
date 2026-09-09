@@ -16,10 +16,10 @@
   <!-- Favicon SVG Educativo -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 
-  <!-- Google Font: Plus Jakarta Sans -->
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,6 +28,7 @@
       theme: {
         extend: {
           fontFamily: {
+            heading: ['"Outfit"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
           },
           colors: {
@@ -42,24 +43,17 @@
               900: '#1E3A8A',
             },
             cta: {
-              DEFAULT: '#059669', // Verde esmeralda cálido y confiable de crecimiento
+              DEFAULT: '#059669',
               hover: '#047857',
               light: '#10B981',
             },
-            amberWarm: {
-              50: '#FFFBEB',
-              100: '#FEF3C7',
-              500: '#F59E0B',
-              600: '#D97706',
-              700: '#B45309',
-            },
             paper: {
-              base: '#FAFAFC',
+              base: '#F3F4F7',
               card: '#FFFFFF',
               border: '#E2E8F0',
               borderHover: '#CBD5E1',
             },
-            textMain: '#0F172A',
+            textMain: '#0B0F19',
             textMuted: '#475569',
             textSubtle: '#64748B',
           }
@@ -68,23 +62,33 @@
     }
   </script>
 
-  <!-- Estilos Críticos para Estética Educativa Confiable -->
+  <!-- Estilos Editoriales 2026 (Maven / Masterclass Style) -->
   <style>
     body {
-      background-color: #FAFAFC;
-      color: #0F172A;
+      background-color: #F3F4F7;
+      color: #1E293B;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
     }
 
-    /* Suave gradiente de fondo amigable */
-    .hero-bg {
-      background: radial-gradient(circle at 50% 0%, rgba(224, 235, 255, 0.7) 0%, rgba(250, 250, 252, 1) 70%);
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', sans-serif !important;
+      letter-spacing: -0.025em;
+    }
+
+    /* Fondo cálido editorial con gradientes suaves de profundidad */
+    .hero-bg, .editorial-bg {
+      background-color: #F3F4F7;
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(226, 232, 242, 0.85) 0%, rgba(243, 244, 247, 0.4) 65%),
+        radial-gradient(ellipse at 85% 20%, rgba(209, 250, 229, 0.3) 0%, rgba(243, 244, 247, 0) 50%);
     }
 
     .pricing-bg {
-      background: radial-gradient(circle at 50% 50%, rgba(240, 253, 244, 0.8) 0%, rgba(250, 250, 252, 1) 75%);
+      background-color: #F3F4F7;
+      background-image: radial-gradient(ellipse at 50% 50%, rgba(220, 245, 233, 0.5) 0%, rgba(243, 244, 247, 1) 75%);
     }
 
     /* Efecto de destello elegante para el botón de llamada a la acción */
@@ -193,15 +197,15 @@
     <section id="hero" class="relative pt-8 pb-12 sm:pt-16 sm:pb-20 px-4 sm:px-6">
       <div class="max-w-4xl mx-auto text-center">
 
-        <!-- Badge Superior Amigable -->
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-edu-200 bg-white text-edu-700 text-xs sm:text-sm font-semibold mb-5 shadow-sm">
+        <!-- Badge Superior Editorial -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-300/80 bg-white/90 backdrop-blur-xs text-slate-800 text-xs sm:text-sm font-semibold mb-6 shadow-xs">
           <span class="text-base">🎓</span>
           <span>Para Tutores, Educadores y Profesionales con Oficio</span>
         </div>
 
-        <!-- H1 Claro, Positivo y Humano -->
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.18] sm:leading-[1.15] mb-5">
-          Convierte lo que sabes en un <span class="text-edu-700 underline decoration-edu-200 decoration-wavy decoration-2">curso digital</span> <span class="block text-2xl sm:text-4xl font-bold text-slate-700 mt-2.5 sm:mt-3 tracking-normal">(y genera ingresos con libertad de tiempo)</span>
+        <!-- H1 Editorial 2026 (Outfit) -->
+        <h1 class="font-heading text-3xl sm:text-5xl lg:text-6xl font-black text-slate-950 tracking-tight leading-[1.12] mb-5">
+          Convierte lo que sabes en un <span class="text-emerald-700 font-black">curso digital</span> <span class="block text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-700 mt-2 sm:mt-3.5 tracking-tight">(y genera ingresos con libertad de tiempo)</span>
         </h1>
 
         <!-- Subtítulo Enfocado en Libertad de Tiempo -->
@@ -213,7 +217,7 @@
         <!-- CONTENEDOR VIDEO DEMO (3 MINUTOS)                                   -->
         <!-- =================================================================== -->
         <div class="max-w-3xl mx-auto mb-10">
-          <div class="relative rounded-2xl sm:rounded-3xl p-2 sm:p-3 bg-white border border-slate-200 shadow-xl">
+          <div class="relative rounded-3xl p-2.5 sm:p-3.5 bg-white border border-slate-200/90 shadow-[0_15px_40px_-10px_rgba(15,23,42,0.08)] ring-1 ring-slate-950/5">
             <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-100 group cursor-pointer" onclick="startVideoDemo()">
               
               <!-- Video Cover Atractivo con Textos, Iluminación y Botón Play -->
@@ -290,7 +294,7 @@
         <!-- =================================================================== -->
         <div class="max-w-md mx-auto space-y-3.5">
           <a href="#oferta" 
-             class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-lg sm:text-xl shadow-xl shadow-emerald-700/25 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+             class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-heading font-extrabold text-lg sm:text-xl shadow-[0_10px_30px_-5px_rgba(5,150,105,0.4)] transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
             <span>¡Quiero Crear Mi Curso Digital!</span>
             <span class="group-hover:translate-x-1 transition-transform font-black text-xl">→</span>
           </a>
@@ -331,14 +335,14 @@
     <!-- ======================================================================= -->
     <!-- 2. COMPARATIVA VISUAL: DAR CLASES POR HORA VS. PROGRAMA DIGITAL (MXN)    -->
     <!-- ======================================================================= -->
-    <section class="py-12 sm:py-16 px-4 sm:px-6 bg-white border-y border-slate-200">
+    <section class="py-14 sm:py-20 px-4 sm:px-6 bg-[#EBECEF]/60 border-y border-slate-200/80">
       <div class="max-w-4xl mx-auto">
         
         <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <span class="text-edu-700 text-xs sm:text-sm font-bold tracking-wider uppercase bg-edu-50 px-3.5 py-1 rounded-full border border-edu-200">
+          <span class="text-slate-800 text-xs sm:text-sm font-bold tracking-wider uppercase bg-white px-3.5 py-1 rounded-full border border-slate-300 shadow-xs">
             Comparativa Real
           </span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-2">
+          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-slate-950 mt-3 mb-2">
             El verdadero costo de seguir cobrando por hora de clase
           </h2>
           <p class="text-slate-600 text-sm sm:text-base">
@@ -794,14 +798,14 @@
     <section id="oferta" class="py-14 sm:py-20 px-4 sm:px-6 pricing-bg">
       <div class="max-w-xl mx-auto">
         
-        <div class="bg-white border-2 border-edu-600 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-blue-900/10 relative overflow-hidden">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-[0_15px_45px_-10px_rgba(15,23,42,0.08)] relative overflow-hidden ring-1 ring-slate-950/5">
           
           <!-- Ribbon Superior de Oferta -->
           <div class="text-center mb-6">
             <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
               Oferta Especial para Educadores
             </span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-slate-950">
               Curso Digital Escalable
             </h2>
             <p class="text-xs sm:text-sm text-slate-500 mt-1">
@@ -870,7 +874,7 @@
             <a href="#oferta" 
                onclick="handleCheckoutRedirect(event, 'pricing_box_main')"
                id="checkout-cta"
-               class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-lg sm:text-xl shadow-xl shadow-emerald-700/30 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+               class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-heading font-extrabold text-lg sm:text-xl shadow-[0_10px_30px_-5px_rgba(5,150,105,0.4)] transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
               <span>¡QUIERO INSCRIBIRME HOY!</span>
               <span class="group-hover:translate-x-1 transition-transform font-black text-xl">→</span>
             </a>
