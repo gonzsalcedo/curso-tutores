@@ -14,6 +14,16 @@ export default function StudentLoginPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [signingIn, setSigningIn] = useState(false);
+  const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("checkout") === "success") {
+        setIsCheckoutSuccess(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!loading && user) {
@@ -83,6 +93,26 @@ export default function StudentLoginPage() {
         <p className="text-slate-400 text-sm mb-8">
           Inicia sesión para acceder a tu programa digital
         </p>
+
+        {isCheckoutSuccess && (
+          <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-slate-900 border border-emerald-500/40 text-left shadow-xl shadow-emerald-500/10 animate-fade-in">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 text-base">
+                🎉
+              </span>
+              <h3 className="font-bold text-white text-base">
+                ¡Inscripción confirmada con éxito!
+              </h3>
+            </div>
+            <p className="text-emerald-200/90 text-xs leading-relaxed mb-3">
+              Tu plaza y acceso de por vida al <strong>Programa Digital</strong> han quedado activados. Entra con el correo con el que te inscribiste o usa tu cuenta de Google.
+            </p>
+            <div className="text-[11px] text-emerald-300/80 bg-emerald-950/60 px-3 py-2 rounded-lg border border-emerald-500/25 flex items-center gap-2">
+              <span>📩</span>
+              <span>También te enviamos un correo con los detalles y comprobante de tu compra.</span>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-medium text-left leading-relaxed">

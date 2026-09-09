@@ -17,10 +17,34 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Curso Digital Escalable | Gonzalo Salcedo",
-  description: "Aprende a empaquetar tu conocimiento, habilidad u oficio en un curso digital automatizado y escalable.",
+  metadataBase: new URL("https://tutor.gonzsalcedo.com"),
+  title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
+  description: "Aprende a empaquetar tu conocimiento, habilidad u oficio en un curso digital automatizado y escalable. Enseña a más alumnos con total libertad.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>",
+  },
+  openGraph: {
+    title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
+    description: "Empaqueta tu habilidad, oficio o conocimiento en un curso digital automatizado. Enseña a más alumnos y genera ingresos con total libertad de tiempo.",
+    url: "https://tutor.gonzsalcedo.com",
+    siteName: "Curso Digital Escalable | Gonzalo Salcedo",
+    images: [
+      {
+        url: "https://tutor.gonzsalcedo.com/gonzalo-salcedo-office.webp",
+        width: 1200,
+        height: 630,
+        alt: "Gonzalo Salcedo - Curso Digital Escalable",
+      },
+    ],
+    locale: "es_MX",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
+    description: "Empaqueta tu habilidad o conocimiento en un curso digital en un fin de semana. Enseña a más alumnos y genera ingresos con libertad.",
+    images: ["https://tutor.gonzsalcedo.com/gonzalo-salcedo-office.webp"],
+    creator: "@gonzsalcedo",
   },
 };
 

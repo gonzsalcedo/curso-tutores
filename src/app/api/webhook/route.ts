@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendMetaConversionEvent } from "@/lib/metaConversions";
+import { sendStudentWelcomeEmail, sendAdminNewStudentEmail } from "@/lib/emailService";
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -104,6 +105,24 @@ export async function POST(req: Request) {
         currency,
         courseTitle: session.metadata?.courseTitle || "Curso Digital Escalable",
       });
+
+      // Enviar correos automáticos vía Resend (Bienvenida al Alumno y Aviso al Tutor)
+      const formattedAmount = `${amountTotal.toLocaleString("es-MX", { minimumFractionDigits: 2 })} ${currency}`;
+      const courseTitle = session.metadata?.courseTitle || "Programa Digital Escalable";
+
+      await Promise.allSettled([
+        sendStudentWelcomeEmail({
+          studentEmail: email,
+          studentName: name,
+          courseTitle,
+        }),
+        sendAdminNewStudentEmail({
+          studentEmail: email,
+          studentName: name,
+          amount: formattedAmount,
+          courseTitle,
+        }),
+      ]);
     }
   }
 

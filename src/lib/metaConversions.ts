@@ -1,9 +1,7 @@
 import crypto from "crypto";
 
 const PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID || "2140367103553718";
-const ACCESS_TOKEN =
-  process.env.META_CAPI_TOKEN ||
-  "EAAQeR87SVEEBSQ3uDqc3jjdooBqKbWszPasrAbp0TVO4RY2tfH8byXYVQvBPZA4TH3cW6C6mysELZB4eO9u6ntW8TkSV9tOCLq6kjtq2XW4ZCkAEEJm6t5qZCZCJRtTkBtP9CIn5q5ZC3tbmFjXZCYWoLJ9pmiX9vAiZAaAKbIeIPmp5wk8rm3MhfF84pkbjC9tKEgZDZD";
+const ACCESS_TOKEN = process.env.META_CAPI_TOKEN || "";
 
 export function hashSha256(value: string): string {
   if (!value) return "";
