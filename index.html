@@ -867,6 +867,15 @@
             <p class="text-xs text-slate-500 mt-1 font-medium">
               Pago único • Sin mensualidades ocultas • Acceso de por vida
             </p>
+
+            <!-- Distintivo Meses Sin Intereses -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-900 text-xs font-semibold border border-emerald-200 mt-3 shadow-xs">
+              <svg class="w-4 h-4 text-emerald-700 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                <line x1="2" x2="22" y1="10" y2="10"></line>
+              </svg>
+              <span>Se aceptan <strong>Meses Sin Intereses</strong> con tarjetas de crédito participantes</span>
+            </div>
           </div>
 
           <!-- Botón de Pago Principal (Checkout) -->
@@ -900,8 +909,8 @@
             </div>
             <div class="h-6 w-px bg-slate-200"></div>
             <div>
-              <span class="block font-bold text-slate-800">⚡ ACCESO INMEDIATO</span>
-              <span>En tu correo al instante</span>
+              <span class="block font-bold text-slate-800">💳 MESES SIN INTERESES</span>
+              <span>Tarjetas participantes</span>
             </div>
             <div class="h-6 w-px bg-slate-200"></div>
             <div>
@@ -1022,7 +1031,7 @@
               </svg>
             </summary>
             <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
-              Aceptamos tarjeta de crédito, tarjeta de débito y métodos de pago en efectivo o transferencia según tu país. En tarjetas participantes dispones de pagos en cómodas cuotas mensuales.
+              Aceptamos todas las tarjetas de crédito y débito (Visa, Mastercard, American Express). <strong>Además, se aceptan Meses Sin Intereses con tarjetas de crédito participantes</strong> al procesar tu inscripción en la pasarela segura.
             </div>
           </details>
         </div>
@@ -1040,7 +1049,8 @@
     <div class="max-w-md mx-auto flex items-center justify-between gap-3">
       <div class="min-w-0">
         <span class="text-[10px] uppercase font-bold text-emerald-700 tracking-wider block">Acceso Inmediato</span>
-        <div class="text-base font-black text-slate-900">$3,500 MXN</div>
+        <div class="text-base font-black text-slate-900 leading-tight">$3,500 MXN</div>
+        <span class="text-[10px] text-emerald-800 font-semibold block">Hasta MSI con tarjetas participantes</span>
       </div>
       <a href="#oferta" 
          class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm shadow-md active:scale-95 shrink-0 transition-transform">
@@ -1226,6 +1236,14 @@
         }, { passive: true });
       }
     });
+  </script>
+
+  <!-- ChatAC Widget - Asistente Educativo Gonz -->
+  <script 
+    id="chatac-script" 
+    src="https://chatac.vercel.app/widget.js?id=73c922f5-e306-486a-8510-24cf7722d1f2" 
+    data-message="¿Tienes dudas sobre cómo empaquetar tu curso o conocimiento? ¡Escríbeme! 👋" 
+    defer>
   </script>
 </body>
 </html>

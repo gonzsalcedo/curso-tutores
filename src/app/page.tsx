@@ -13,7 +13,10 @@ export default function HomePage() {
 
   // Extraer el contenido de body
   const bodyContentMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-  const bodyContent = bodyContentMatch ? bodyContentMatch[1] : html;
+  let bodyContent = bodyContentMatch ? bodyContentMatch[1] : html;
+
+  // Remover cualquier etiqueta script estática de chatac para inyectarla de forma dinámica y reactiva en el cliente
+  bodyContent = bodyContent.replace(/<script[^>]*chatac[^>]*>[\s\S]*?<\/script>/gi, "");
 
   return <LandingPageClient htmlContent={bodyContent} />;
 }

@@ -170,11 +170,25 @@ export default function LandingPageClient({ htmlContent }: Props) {
       observer.observe(hero);
     }
 
+    // 4. Inyectar Widget de ChatAC (Asistente Gonz) de forma dinámica
+    if (!document.getElementById("chatac-widget-container") && !document.getElementById("chatac-active-script")) {
+      const script = document.createElement("script");
+      script.id = "chatac-active-script";
+      script.src = "/widget.js?id=73c922f5-e306-486a-8510-24cf7722d1f2";
+      script.setAttribute("data-message", "¿Tienes dudas sobre cómo empaquetar tu curso o conocimiento? ¡Escríbeme! 👋");
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
     return () => {
       document.removeEventListener("click", handleDocumentClick);
       if (observer && hero) {
         observer.unobserve(hero);
       }
+      const container = document.getElementById("chatac-widget-container");
+      if (container) container.remove();
+      const activeScript = document.getElementById("chatac-active-script");
+      if (activeScript) activeScript.remove();
     };
   }, []);
 
