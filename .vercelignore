@@ -1,0 +1,13 @@
+# Ignore big video files
+*.mp4
+*.m4v
+*.mov
+*.MP4
+
+# Ignore local environment
+.env.local
+.env*.local
+
+# Ignore docs / screenshots
+Captura de pantalla*
+upload-to-bunny.mjs

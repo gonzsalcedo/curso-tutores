@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Curso Digital Escalable: Convierte lo que Sabes en un Negocio Educativo con Libertad</title>
+  <meta name="description" content="Aprende a empaquetar tu conocimiento, habilidad u oficio en un curso digital escalable. Enseña a más alumnos y genera ingresos con total libertad de tiempo.">
+
+  <!-- Open Graph / Meta Ads Optimization -->
+  <meta property="og:title" content="Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad">
+  <meta property="og:description" content="Empaqueta tu habilidad o conocimiento en un curso digital en un fin de semana. Enseña a más alumnos y genera ingresos con libertad.">
+  <meta property="og:image" content="gonzalo-salcedo-office.webp">
+  <meta name="author" content="Gonzalo Salcedo">
+  <meta property="og:type" content="product">
+
+  <!-- Favicon SVG Educativo -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            edu: {
+              50: '#EEF4FF',
+              100: '#E0EBFF',
+              200: '#C7D9FE',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+              800: '#1E40AF',
+              900: '#1E3A8A',
+            },
+            cta: {
+              DEFAULT: '#059669', // Verde esmeralda cálido y confiable de crecimiento
+              hover: '#047857',
+              light: '#10B981',
+            },
+            amberWarm: {
+              50: '#FFFBEB',
+              100: '#FEF3C7',
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309',
+            },
+            paper: {
+              base: '#FAFAFC',
+              card: '#FFFFFF',
+              border: '#E2E8F0',
+              borderHover: '#CBD5E1',
+            },
+            textMain: '#0F172A',
+            textMuted: '#475569',
+            textSubtle: '#64748B',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos Críticos para Estética Educativa Confiable -->
+  <style>
+    body {
+      background-color: #FAFAFC;
+      color: #0F172A;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Suave gradiente de fondo amigable */
+    .hero-bg {
+      background: radial-gradient(circle at 50% 0%, rgba(224, 235, 255, 0.7) 0%, rgba(250, 250, 252, 1) 70%);
+    }
+
+    .pricing-bg {
+      background: radial-gradient(circle at 50% 50%, rgba(240, 253, 244, 0.8) 0%, rgba(250, 250, 252, 1) 75%);
+    }
+
+    /* Efecto de destello elegante para el botón de llamada a la acción */
+    .shimmer-button {
+      position: relative;
+      overflow: hidden;
+    }
+    .shimmer-button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(25deg);
+      animation: shimmer 3.8s infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -60%; }
+      30%, 100% { left: 140%; }
+    }
+
+    /* Estilos para FAQ interactivo */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    details summary {
+      list-style: none;
+    }
+    details[open] summary .faq-chevron {
+      transform: rotate(180deg);
+    }
+  </style>
+
+  <!-- ========================================================================= -->
+  <!-- CONFIGURACIÓN DE CONVERSIÓN & PIXEL                                       -->
+  <!-- ========================================================================= -->
+  <script>
+    // 1. INSERTA AQUÍ TU LINK DE CHECKOUT O PASARELA DE PAGO
+    const CHECKOUT_URL = 'https://tu-enlace-de-pago.com/checkout'; 
+
+    // 2. WHATSAPP PARA SOPORTE / DUDAS DE COMPRA
+    const WHATSAPP_SUPPORT_URL = 'https://wa.me/521XXXXXXXXXX?text=Hola%20Gonzalo,%20tengo%20una%20duda%20antes%20de%20inscribirme%20al%20Programa%20Digital%20Escalable';
+
+    // 3. ID DE META PIXEL
+    const META_PIXEL_ID = 'YOUR_PIXEL_ID_HERE'; // <-- Inserta tu ID (ej: '987654321012345')
+
+    // 4. PRECIO DEL CURSO PARA EVENTO DE TRACKING
+    const COURSE_PRICE = 3500.00;
+    const COURSE_CURRENCY = 'MXN';
+
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    if (META_PIXEL_ID && META_PIXEL_ID !== 'YOUR_PIXEL_ID_HERE') {
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    } else {
+      console.warn('⚠️ Meta Pixel ID no configurado aún en index.html');
+    }
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/>
+  </noscript>
+</head>
+
+<body class="bg-paper-base min-h-screen text-textMain flex flex-col justify-between selection:bg-edu-200 selection:text-edu-900">
+
+  <!-- ======================================================================= -->
+  <!-- BARRA DE ANUNCIO SUPERIOR / ENFOQUE EDUCATIVO AMIGABLE                  -->
+  <!-- ======================================================================= -->
+  <header class="w-full border-b border-edu-100 bg-white/90 backdrop-blur-md sticky top-0 z-40 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between text-xs sm:text-sm">
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">✓</span>
+        <span class="font-bold tracking-wide text-edu-800 text-xs sm:text-sm">Inscripciones Abiertas</span>
+        <span class="text-textSubtle hidden sm:inline">• Precio Especial</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="/cursos/login" class="text-slate-600 hover:text-edu-700 font-semibold text-xs sm:text-sm transition-colors flex items-center gap-1">
+          <span>🎓</span>
+          <span>Acceso Alumnos</span>
+        </a>
+        <a href="/admin" class="hidden sm:inline-flex text-slate-400 hover:text-slate-700 text-xs font-medium transition-colors">
+          Maestro
+        </a>
+        <a href="#oferta" class="flex items-center gap-1 px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-xs">
+          <span>Inscribirme ($3,500)</span>
+          <span>↓</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="flex-grow hero-bg">
+
+    <!-- ======================================================================= -->
+    <!-- 1. HERO SECTION (Cálido, Pedagógico y de Alta Conversión)               -->
+    <!-- ======================================================================= -->
+    <section id="hero" class="relative pt-8 pb-12 sm:pt-16 sm:pb-20 px-4 sm:px-6">
+      <div class="max-w-4xl mx-auto text-center">
+
+        <!-- Badge Superior Amigable -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-edu-200 bg-white text-edu-700 text-xs sm:text-sm font-semibold mb-5 shadow-sm">
+          <span class="text-base">🎓</span>
+          <span>Para Tutores, Educadores y Profesionales con Oficio</span>
+        </div>
+
+        <!-- H1 Claro, Positivo y Humano -->
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.18] sm:leading-[1.15] mb-5">
+          Convierte lo que sabes en un <span class="text-edu-700 underline decoration-edu-200 decoration-wavy decoration-2">curso digital</span> <span class="block text-2xl sm:text-4xl font-bold text-slate-700 mt-2.5 sm:mt-3 tracking-normal">(y genera ingresos con libertad de tiempo)</span>
+        </h1>
+
+        <!-- Subtítulo Enfocado en Libertad de Tiempo -->
+        <p class="text-base sm:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto mb-8 sm:mb-10">
+          El método paso a paso para empaquetar tus clases o consultorías en un curso que genera <strong class="text-slate-900 font-semibold">alumnos continuos</strong> sin agotarte atendiendo personas 1 a 1 ni volverte esclavo del calendario.
+        </p>
+
+        <!-- =================================================================== -->
+        <!-- CONTENEDOR VIDEO DEMO (3 MINUTOS)                                   -->
+        <!-- =================================================================== -->
+        <div class="max-w-3xl mx-auto mb-10">
+          <div class="relative rounded-2xl sm:rounded-3xl p-2 sm:p-3 bg-white border border-slate-200 shadow-xl">
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-100">
+              
+              <!-- Video Placeholder Amigable -->
+              <div id="vsl-cover" class="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-t from-slate-950/90 via-slate-900/70 to-transparent">
+                <!-- Badge del Video -->
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/30 text-white text-xs font-semibold mb-3 backdrop-blur-sm">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>DEMOSTRACIÓN RÁPIDA (3 MINUTOS)</span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-bold text-white max-w-lg mb-4 leading-snug">
+                  Mira cómo funciona un programa educativo automatizado por dentro
+                </h3>
+                
+                <!-- Botón Play Amigable -->
+                <button type="button" 
+                        onclick="startVideoDemo()"
+                        class="group relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cta hover:bg-cta-hover text-white shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
+                  <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+                <p class="text-xs text-slate-200 mt-4 font-medium">Haz clic para ver cómo se ve el sistema de alumnos y ventas</p>
+              </div>
+
+              <!-- Contenedor iframe para video real de Bunny.net Stream -->
+              <div id="video-embed-container" class="w-full h-full hidden relative">
+                <iframe 
+                  id="bunny-vsl-iframe"
+                  src=""
+                  data-src="https://iframe.mediadelivery.net/embed/623568/6d690590-80ab-4f21-8336-021bcf34616b?autoplay=true&loop=false&muted=false&preload=true&responsive=true" 
+                  loading="lazy" 
+                  style="border:0;position:absolute;top:0;left:0;height:100%;width:100%;" 
+                  allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" 
+                  allowfullscreen="true">
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- CTA PRINCIPAL DEL HERO                                              -->
+        <!-- =================================================================== -->
+        <div class="max-w-md mx-auto space-y-3.5">
+          <a href="#oferta" 
+             class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-cta hover:bg-cta-hover text-white font-bold text-lg sm:text-xl shadow-lg shadow-emerald-700/20 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+            <span>¡Quiero Crear Mi Curso Digital!</span>
+            <span class="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+
+          <!-- Microcopias de Confianza -->
+          <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs sm:text-sm text-slate-600 font-medium">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Acceso Inmediato
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              Pago Seguro
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              Garantía de 7 Días
+            </span>
+          </div>
+        </div>
+
+        <!-- Social Proof Amigable -->
+        <div class="mt-8 pt-7 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs sm:text-sm text-slate-600">
+          <div class="flex -space-x-2 overflow-hidden">
+            <span class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-blue-100 text-xs font-bold text-blue-700">JP</span>
+            <span class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-emerald-100 text-xs font-bold text-emerald-700">MC</span>
+            <span class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-amber-100 text-xs font-bold text-amber-700">LR</span>
+            <span class="inline-flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-white bg-purple-100 text-xs font-bold text-purple-700">AR</span>
+          </div>
+          <div>
+            <strong class="text-slate-900">+450 tutores, formadores y profesionales</strong> ya han aplicado este modelo educativo.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 2. COMPARATIVA VISUAL: DAR CLASES POR HORA VS. PROGRAMA DIGITAL (MXN)    -->
+    <!-- ======================================================================= -->
+    <section class="py-12 sm:py-16 px-4 sm:px-6 bg-white border-y border-slate-200">
+      <div class="max-w-4xl mx-auto">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <span class="text-edu-700 text-xs sm:text-sm font-bold tracking-wider uppercase bg-edu-50 px-3.5 py-1 rounded-full border border-edu-200">
+            Comparativa Real
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-2">
+            El verdadero costo de seguir cobrando por hora de clase
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base">
+            Mira la diferencia en tu calidad de vida y en tus ingresos:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 text-left">
+          
+          <!-- MODELO TRADICIONAL (Cobrar por hora) -->
+          <div class="bg-rose-50/40 border border-rose-200 rounded-3xl p-5 sm:p-6 relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-700 bg-rose-100 px-3 py-1 rounded-full">
+                  ✕ Cobrar por Hora (1 a 1)
+                </span>
+                <span class="text-xs text-slate-500 font-medium">Techo de tiempo</span>
+              </div>
+
+              <!-- Bloque Destacado Horas -->
+              <div class="bg-white border border-rose-200 rounded-2xl p-4 mb-4 shadow-sm">
+                <span class="text-xs uppercase font-bold text-rose-600 tracking-wider block">Tiempo que te consume:</span>
+                <div class="text-2xl font-black text-rose-700 mt-0.5">
+                  25 a 30 hrs <span class="text-xs font-normal text-slate-500">/ semana</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-snug mt-1.5">
+                  Horas frente a pantalla, cancelaciones imprevistas y dudas a deshoras sin descanso.
+                </p>
+              </div>
+
+              <div class="space-y-2.5 text-xs sm:text-sm text-slate-600">
+                <div class="flex items-center justify-between py-1.5 border-b border-rose-100">
+                  <span>Tarifa promedio:</span>
+                  <span class="font-bold text-slate-800">$400 MXN / hora</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 border-b border-rose-100">
+                  <span>Capacidad máxima:</span>
+                  <span class="font-bold text-rose-700">12 a 15 alumnos al mes</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5">
+                  <span>Si descansas o tomas vacaciones:</span>
+                  <span class="font-bold text-rose-700">$0 MXN facturados</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total tradicional -->
+            <div class="mt-5 pt-3.5 border-t border-rose-200 text-left">
+              <div class="text-xs text-slate-500 font-medium">Ingreso mensual con tope:</div>
+              <div class="text-xl font-extrabold text-slate-700 mt-0.5">
+                ~$25,000 - $35,000 MXN
+              </div>
+              <span class="text-xs text-rose-600 block mt-0.5">Agotamiento constante y cero tiempo libre</span>
+            </div>
+          </div>
+
+          <!-- MODELO ESCALABLE (Curso Digital) -->
+          <div class="bg-white border-2 border-emerald-500 rounded-3xl p-5 sm:p-6 relative flex flex-col justify-between shadow-xl shadow-emerald-900/5 ring-4 ring-emerald-500/10">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
+                  ✓ Tu Curso Digital
+                </span>
+                <span class="text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+                  Modelo Escalable
+                </span>
+              </div>
+
+              <!-- Bloque Destacado Horas -->
+              <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 mb-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs uppercase font-bold text-emerald-800 tracking-wider block">Tiempo que te consume:</span>
+                  <span class="text-[11px] font-bold text-emerald-800 bg-emerald-200 px-2 py-0.5 rounded">Ahorras 85%</span>
+                </div>
+                <div class="text-2xl font-black text-emerald-800 mt-0.5">
+                  Solo 3 a 4 hrs <span class="text-xs font-semibold text-emerald-700">/ semana</span>
+                </div>
+                <p class="text-xs text-emerald-900/80 leading-snug mt-1.5">
+                  Tus lecciones se graban una sola vez. Solo respondes dudas grupales semanales a tu ritmo.
+                </p>
+              </div>
+
+              <div class="space-y-2.5 text-xs sm:text-sm text-slate-600">
+                <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                  <span>Precio de tu curso:</span>
+                  <span class="font-bold text-slate-900">$3,500 MXN / alumno</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                  <span>Grupo inicial estándar:</span>
+                  <span class="font-bold text-emerald-700">10 a 20 inscritos</span>
+                </div>
+                <div class="flex items-center justify-between py-1.5">
+                  <span>Si descansas o viajas:</span>
+                  <span class="font-bold text-emerald-700">Tu plataforma inscribe 24/7</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total escalable -->
+            <div class="mt-5 pt-3.5 border-t border-emerald-200 bg-emerald-50 -mx-5 -mb-5 sm:-mx-6 sm:-mb-6 p-4 rounded-b-3xl text-left">
+              <div class="text-xs text-emerald-800 font-semibold flex items-center justify-between">
+                <span>Ingreso generado:</span>
+                <span class="text-[11px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-bold">+100% adicional</span>
+              </div>
+              <div class="text-2xl font-black text-emerald-900 mt-0.5">
+                $35,000 – $70,000 MXN
+              </div>
+              <span class="text-xs text-slate-600 block mt-0.5">Con solo 1 o 2 alumnos recuperas el costo de este curso.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Banner Amigable de Decisión -->
+        <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-edu-50 border border-edu-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-left shadow-sm">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl shrink-0">💡</span>
+            <div class="text-xs sm:text-sm text-slate-700 leading-snug">
+              <strong class="text-slate-900">Totalmente compatible con tu trabajo actual:</strong> No necesitas renunciar a tus alumnos actuales. Puedes crear este programa en tus ratos libres como un ingreso extra que irá creciendo mes a mes.
+            </div>
+          </div>
+          <a href="#oferta" class="shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cta text-white font-bold text-xs sm:text-sm text-center hover:bg-cta-hover transition-colors shadow-sm">
+            Inscribirme Ahora
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 3. PLAN DE ESTUDIOS (4 MÓDULOS PASO A PASO)                             -->
+    <!-- ======================================================================= -->
+    <section id="temario" class="py-14 sm:py-20 px-4 sm:px-6">
+      <div class="max-w-4xl mx-auto">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <span class="text-edu-700 text-xs sm:text-sm font-bold tracking-wider uppercase bg-white px-3.5 py-1 rounded-full border border-edu-200 shadow-sm">
+            Plan de Estudios
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-3">
+            Todo lo que incluye el programa para lanzar tu curso en un fin de semana
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base">
+            Diseñado como un paso a paso amigable, claro y directo. Sin tecnicismos complicados.
+          </p>
+        </div>
+
+        <!-- Grid de los 4 Módulos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- MÓDULO 1 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold text-edu-800 bg-edu-50 px-3 py-1 rounded-full border border-edu-100 uppercase tracking-wider">
+                Módulo 1
+              </span>
+              <span class="text-xs text-slate-500 font-medium">Paso Inicial</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              Estructura de tu Oferta y Validación
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+              Aprende a empaquetar lo que enseñas en una propuesta atractiva y clara por la que tus alumnos estén felices de pagar de inmediato.
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-4">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Cómo poner el precio adecuado a tu programa ($2,500 - $7,000+ MXN)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Validación sencilla antes de grabar para asegurar que haya demanda</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Definición exacta del alumno ideal que busca aprender contigo</li>
+            </ul>
+          </div>
+
+          <!-- MÓDULO 2 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold text-edu-800 bg-edu-50 px-3 py-1 rounded-full border border-edu-100 uppercase tracking-wider">
+                Módulo 2
+              </span>
+              <span class="text-xs text-slate-500 font-medium">Metodología Ágil</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              Grabación Ágil en un Fin de Semana
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+              El método para producir tu programa completo en 48 horas usando solo tu computadora y celular, sin equipos costosos ni estudios de grabación.
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-4">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Guiones prediseñados para grabar lecciones dinámicas de 8 a 12 min</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Herramientas sencillas para grabar pantalla y voz con nitidez profesional</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Plantillas de presentaciones y guías de apoyo para tus alumnos</li>
+            </ul>
+          </div>
+
+          <!-- MÓDULO 3: 2 CAMINOS FLEXIBLES -->
+          <div class="bg-white border-2 border-edu-200 rounded-3xl p-6 hover:shadow-lg transition-all group shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold text-edu-800 bg-edu-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                Módulo 3 • Elige tu Camino
+              </span>
+              <span class="text-xs text-edu-700 font-bold bg-edu-50 px-2 py-0.5 rounded border border-edu-200">2 Rutas a tu Medida</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              Tu Aula Virtual y Cobros: 2 Opciones Claras
+            </h3>
+            <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
+              Tú decides cómo quieres operar según tu comodidad con la tecnología:
+            </p>
+            
+            <div class="space-y-3 mb-4">
+              <!-- Ruta 1 -->
+              <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded">
+                    🟢 Ruta 1: Express (Sin configurar nada)
+                  </span>
+                </div>
+                <p class="text-xs text-slate-600 leading-snug">
+                  Monta tu escuela en plataformas educativas todo-en-uno sin costo fijo. Cero tecnicismos: solo subes tus videos, activas el sistema de cobros y empiezas a vender de inmediato.
+                </p>
+              </div>
+
+              <!-- Ruta 2 -->
+              <div class="bg-edu-50/70 border border-edu-200 rounded-2xl p-3.5">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-bold text-edu-800 uppercase tracking-wider bg-edu-200 px-2 py-0.5 rounded">
+                    🚀 Ruta 2: Pro con IA (Tu Marca Propia)
+                  </span>
+                </div>
+                <p class="text-xs text-slate-700 leading-snug">
+                  Aprende a crear tu propia página web usando herramientas de <strong>Inteligencia Artificial</strong> en minutos, alojarla gratis en la nube con tu propio dominio y conectar cobros directos sin intermediarios.
+                </p>
+              </div>
+            </div>
+
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-3">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Cobros internacionales automatizados 24/7 en ambas rutas</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Entrega automática de accesos al alumno tras pagar</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Asistencia paso a paso para que nunca te atores</li>
+            </ul>
+          </div>
+
+          <!-- MÓDULO 4 -->
+          <div class="bg-white border border-slate-200 rounded-3xl p-6 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold text-edu-800 bg-edu-50 px-3 py-1 rounded-full border border-edu-100 uppercase tracking-wider">
+                Módulo 4
+              </span>
+              <span class="text-xs text-slate-500 font-medium">Difusión Continua</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              Atracción Predecible de Alumnos
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+              El sistema para que personas interesadas en tu tema te descubran e inscriban cada semana sin volverte esclavo de las redes sociales.
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-600 border-t border-slate-100 pt-4">
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Anuncios sencillos y accesibles para conectar con alumnos ideales</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Mensajes directos para resolver dudas y cerrar inscripciones con calidez</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">✓</span> Cómo construir una comunidad educativa que recomiende tu curso</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 4. STACK DE BONOS EXCLUSIVOS (AMIGABLE Y GENEROSO)                       -->
+    <!-- ======================================================================= -->
+    <section class="py-12 sm:py-16 px-4 sm:px-6 bg-white border-y border-slate-200">
+      <div class="max-w-4xl mx-auto">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <span class="text-amberWarm-700 text-xs sm:text-sm font-bold tracking-wider uppercase bg-amberWarm-50 px-3.5 py-1 rounded-full border border-amberWarm-100">
+            Regalos Especiales
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-2">
+            Inscríbete hoy y llévate estos 4 Bonos Prácticos GRATIS
+          </h2>
+          <p class="text-slate-600 text-xs sm:text-sm">
+            Recursos y plantillas listas para usar que te ahorrarán semanas de trabajo:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+          <!-- BONO 1 -->
+          <div class="bg-paper-base border border-slate-200 rounded-3xl p-5 flex flex-col justify-between hover:border-edu-300 transition-all">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-edu-800 bg-edu-100 px-2.5 py-0.5 rounded-full">
+                  Bono #1 • Plantilla Web
+                </span>
+                <span class="text-xs text-slate-400 line-through">Valor: $3,500 MXN</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1.5">
+                Plantilla Web de Presentación y Venta
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                El diseño de esta misma página adaptado para formadores. Solo cambias tus textos y enlaces en minutos.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 text-xs font-bold text-emerald-700 flex items-center justify-between">
+              <span>Incluido GRATIS con tu inscripción</span>
+              <span>✓</span>
+            </div>
+          </div>
+
+          <!-- BONO 2 -->
+          <div class="bg-paper-base border border-slate-200 rounded-3xl p-5 flex flex-col justify-between hover:border-edu-300 transition-all">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-edu-800 bg-edu-100 px-2.5 py-0.5 rounded-full">
+                  Bono #2 • Mensajes de Cierre
+                </span>
+                <span class="text-xs text-slate-400 line-through">Valor: $2,000 MXN</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1.5">
+                Guiones Cálidos de Atención al Alumno
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Los mensajes exactos para resolver dudas de personas interesadas e inscribirlas con trato humano y profesional.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 text-xs font-bold text-emerald-700 flex items-center justify-between">
+              <span>Incluido GRATIS con tu inscripción</span>
+              <span>✓</span>
+            </div>
+          </div>
+
+          <!-- BONO 3 -->
+          <div class="bg-paper-base border border-slate-200 rounded-3xl p-5 flex flex-col justify-between hover:border-edu-300 transition-all">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-edu-800 bg-edu-100 px-2.5 py-0.5 rounded-full">
+                  Bono #3 • Difusión
+                </span>
+                <span class="text-xs text-slate-400 line-through">Valor: $2,500 MXN</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1.5">
+                Mini-Curso: Difusión y Anuncios con Bajo Presupuesto
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Tutorial guiado paso a paso para dar a conocer tu curso a alumnos que realmente quieren aprender tu habilidad.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 text-xs font-bold text-emerald-700 flex items-center justify-between">
+              <span>Incluido GRATIS con tu inscripción</span>
+              <span>✓</span>
+            </div>
+          </div>
+
+          <!-- BONO 4 -->
+          <div class="bg-paper-base border border-slate-200 rounded-3xl p-5 flex flex-col justify-between hover:border-edu-300 transition-all">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-edu-800 bg-edu-100 px-2.5 py-0.5 rounded-full">
+                  Bono #4 • Acompañamiento
+                </span>
+                <span class="text-xs text-slate-400 line-through">Valor: Invaluable</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-1.5">
+                Canal de Soporte Directo y Actualizaciones
+              </h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Acceso para resolver cualquier duda que surja mientras montas tu curso, más todas las actualizaciones futuras del material.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 text-xs font-bold text-emerald-700 flex items-center justify-between">
+              <span>Incluido GRATIS con tu inscripción</span>
+              <span>✓</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 5. AUTORIDAD / QUIÉN TE ENSEÑA (Gonzalo Salcedo - Cercano y Humano)    -->
+    <!-- ======================================================================= -->
+    <section class="py-12 sm:py-16 px-4 sm:px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 sm:gap-8 shadow-sm">
+          
+          <!-- Foto del Instructor -->
+          <div class="relative shrink-0">
+            <div class="w-32 h-32 sm:w-44 sm:h-44 rounded-2xl ring-4 ring-edu-50 overflow-hidden bg-slate-100 flex items-center justify-center shadow-md">
+              <img src="gonzalo-salcedo-office.webp" 
+                   alt="Gonzalo Salcedo - Tu Instructor" 
+                   class="w-full h-full object-cover" 
+                   loading="lazy"
+                   onerror="this.src='gonzalo-salcedo-hd.webp'">
+            </div>
+            <span class="absolute -bottom-2 -right-2 px-3 py-1 rounded-full bg-edu-600 text-white font-bold text-[10px] uppercase shadow-sm">
+              Tu Mentor
+            </span>
+          </div>
+
+          <!-- Biografía Humana y Empática -->
+          <div class="min-w-0 flex-1 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-edu-700 bg-edu-50 px-3 py-1 rounded-full border border-edu-100">
+                Especialista en Programas Educativos
+              </span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight mb-1">
+              Gonzalo Salcedo
+            </h3>
+            <p class="text-sm font-semibold text-emerald-700 mb-3">
+              Ayudando a formadores y expertos a crear activos educativos digitales
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-3">
+              Durante más de 7 años he acompañado a profesores, tutores, consultores y especialistas con oficio a dejar atrás el agotamiento de dar clases por hora y estructurar programas digitales que funcionan con tranquilidad.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              Mi objetivo es que compartas tu conocimiento con el mundo sin que eso te cueste tus fines de semana ni tu paz mental.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 6. GARANTÍA INCONDICIONAL DE 7 DÍAS (TRANQUILIDAD TOTAL)                 -->
+    <!-- ======================================================================= -->
+    <section class="py-8 sm:py-12 px-4 sm:px-6">
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-white border-2 border-emerald-500/40 rounded-3xl p-6 sm:p-8 text-center relative shadow-sm">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-emerald-50 border-2 border-emerald-500 flex items-center justify-center text-emerald-700 mb-4">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3.5 py-1 rounded-full">
+            Garantía de Satisfacción 100%
+          </span>
+          <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-3 mb-3">
+            Pruébalo durante 7 días sin ningún riesgo
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-lg mx-auto">
+            Entra al curso, mira las lecciones, revisa los ejemplos y plantillas. Si en tus primeros 7 días sientes que este programa no es para ti o no era lo que esperabas, solo envíanos un mensaje y te devolvemos el <strong class="text-slate-900 font-bold">100% de tu dinero</strong> de inmediato. Tu tranquilidad es primero.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 7. CAJA DE OFERTA / CHECKOUT STACK                                      -->
+    <!-- ======================================================================= -->
+    <section id="oferta" class="py-14 sm:py-20 px-4 sm:px-6 pricing-bg">
+      <div class="max-w-xl mx-auto">
+        
+        <div class="bg-white border-2 border-edu-600 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-blue-900/10 relative overflow-hidden">
+          
+          <!-- Ribbon Superior de Oferta -->
+          <div class="text-center mb-6">
+            <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
+              Oferta Especial para Educadores
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Curso Digital Escalable
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              Acceso completo e ilimitado para siempre
+            </p>
+          </div>
+
+          <!-- Resumen de lo que te llevas (Stack) -->
+          <div class="space-y-3 py-4 border-y border-slate-100 text-xs sm:text-sm text-slate-600">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-600 font-bold">✓</span>
+                Programa Completo (4 Módulos Paso a Paso)
+              </span>
+              <span class="text-slate-400 line-through">$7,000 MXN</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-600 font-bold">✓</span>
+                Bono 1: Plantilla Web de Presentación y Venta
+              </span>
+              <span class="text-slate-400 line-through">$3,500 MXN</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-600 font-bold">✓</span>
+                Bono 2: Guiones Cálidos de Cierre de Alumnos
+              </span>
+              <span class="text-slate-400 line-through">$2,000 MXN</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-600 font-bold">✓</span>
+                Bono 3: Mini-Curso de Difusión con Bajo Presupuesto
+              </span>
+              <span class="text-slate-400 line-through">$2,500 MXN</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="text-emerald-600 font-bold">✓</span>
+                Bono 4: Canal de Soporte Directo y Actualizaciones
+              </span>
+              <span class="text-edu-700 font-bold">Invaluable</span>
+            </div>
+          </div>
+
+          <!-- Comparativa de Precios -->
+          <div class="text-center my-6">
+            <div class="text-xs text-slate-400">
+              Valor Total Real: <span class="line-through font-semibold text-rose-500">$15,000+ MXN</span>
+            </div>
+            <div class="mt-2 text-xs uppercase font-bold text-edu-700 tracking-wider">
+              Precio Especial de Lanzamiento:
+            </div>
+            <div class="text-4xl sm:text-5xl font-black text-slate-900 mt-1 flex items-baseline justify-center gap-2">
+              <span class="text-emerald-700">$3,500</span>
+              <span class="text-lg text-slate-600 font-bold">MXN</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1 font-medium">
+              Pago único • Sin mensualidades ocultas • Acceso de por vida
+            </p>
+          </div>
+
+          <!-- Botón de Pago Principal (Checkout) -->
+          <div class="space-y-3">
+            <a href="#" 
+               onclick="handleCheckoutRedirect(event, 'pricing_box_main')"
+               id="checkout-cta"
+               class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-cta hover:bg-cta-hover text-white font-bold text-lg sm:text-xl shadow-lg shadow-emerald-700/20 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+              <span>¡QUIERO INSCRIBIRME HOY!</span>
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+
+            <!-- Opción Secundaria: Dudas por WhatsApp -->
+            <div class="text-center pt-2">
+              <a href="#" 
+                 onclick="handleWhatsAppSupport(event, 'pricing_box_questions')"
+                 class="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-600 hover:text-emerald-700 font-semibold transition-colors">
+                <svg class="w-4 h-4 fill-current text-emerald-600" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.42-.099.825zm-3.396-10.416c-5.523 0-10.007 4.484-10.007 10.007 0 1.96.568 3.788 1.547 5.334l-1.642 5.993 6.16-1.616c1.488.878 3.228 1.385 5.087 1.385 5.524 0 10.007-4.484 10.007-10.007s-4.483-10.007-10.007-10.007zm0 18.239c-1.621 0-3.136-.484-4.412-1.317l-.317-.206-3.275.859.874-3.193-.207-.329c-.908-1.444-1.389-3.125-1.389-4.853 0-4.542 3.696-8.239 8.239-8.239 4.544 0 8.239 3.697 8.239 8.239 0 4.543-3.695 8.239-8.239 8.239z"/>
+                </svg>
+                <span>¿Tienes alguna pregunta antes de inscribirte? Escríbeme por WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Sellos de Confianza -->
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center justify-around text-center text-[11px] text-slate-500">
+            <div>
+              <span class="block font-bold text-slate-800">🔒 PAGO SEGURO</span>
+              <span>Checkout protegido</span>
+            </div>
+            <div class="h-6 w-px bg-slate-200"></div>
+            <div>
+              <span class="block font-bold text-slate-800">⚡ ACCESO INMEDIATO</span>
+              <span>En tu correo al instante</span>
+            </div>
+            <div class="h-6 w-px bg-slate-200"></div>
+            <div>
+              <span class="block font-bold text-slate-800">🛡️ 7 DÍAS DE GARANTÍA</span>
+              <span>Devolución 100%</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 8. PREGUNTAS FRECUENTES (FAQ CLARO Y HUMANO)                            -->
+    <!-- ======================================================================= -->
+    <section class="py-12 sm:py-16 px-4 sm:px-6 bg-white border-t border-slate-200">
+      <div class="max-w-2xl mx-auto">
+        
+        <div class="text-center mb-10">
+          <span class="text-edu-700 text-xs sm:text-sm font-bold tracking-wider uppercase bg-edu-50 px-3.5 py-1 rounded-full border border-edu-200">
+            Resolución de Dudas
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">
+            Preguntas Frecuentes
+          </h2>
+        </div>
+
+        <div class="space-y-3.5">
+          <!-- Pregunta 1 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿El curso es en vivo o pregrabado?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <strong class="text-slate-900">El contenido está 100% grabado en video de alta calidad</strong> para que avances a tu propio ritmo y en tus horarios libres, sin presiones de asistencia. Además, cuentas con acceso al canal de soporte para resolver dudas específicas sobre tu proyecto educativo.
+            </div>
+          </details>
+
+          <!-- Pregunta 2 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Cuándo y cómo recibo el acceso después de inscribirme?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <strong class="text-slate-900">El acceso es inmediato y automático.</strong> Tan pronto se confirma tu pago en la pasarela, recibirás un correo electrónico con tus credenciales personales y el enlace directo para ingresar a tu aula virtual y descargar las plantillas de inmediato.
+            </div>
+          </details>
+
+          <!-- Pregunta 3 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Necesito saber de computación o tener experiencia técnica previa?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <strong class="text-slate-900">No necesitas saber programar en lo absoluto.</strong> El método está pensado para educadores, profesores y profesionales prácticos. Todo se explica con clics claros en pantalla utilizando plantillas listas para usar.
+            </div>
+          </details>
+
+          <!-- Pregunta 3.1: Plataformas y los 2 caminos -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Qué plataforma o herramientas usaré para alojar mi curso?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <p class="mb-2">Te enseñamos <strong>dos opciones para que elijas la que mejor se adapte a ti:</strong></p>
+              <ul class="space-y-1.5 list-disc list-inside text-slate-600">
+                <li><strong class="text-slate-900">Ruta 1 (Express No-Code):</strong> Usar plataformas educativas todo-en-uno donde no configuras nada técnico; solo subes tus videos y comienzas a vender el mismo día sin costos mensuales fijos.</li>
+                <li><strong class="text-slate-900">Ruta 2 (Pro con Inteligencia Artificial):</strong> Te enseñamos a crear tu propia página web con IA, alojarla gratis en la nube con tu propio dominio y conectar pasarelas directas, quedándote con el total de tus ingresos.</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- Pregunta 4 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Por cuánto tiempo tendré acceso al programa y bonos?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <strong class="text-slate-900">Acceso de por vida.</strong> Puedes ver las lecciones las veces que quieras y tendrás acceso garantizado a todas las actualizaciones y nuevos materiales que se agreguen en el futuro sin pagar un solo peso extra.
+            </div>
+          </details>
+
+          <!-- Pregunta 5 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Cómo funciona la garantía de 7 días?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              <strong class="text-slate-900">Garantía sin riesgo de 7 días:</strong> Si tras revisar las clases y el material consideras que el curso no cumple tus expectativas, solicitas tu reembolso y la pasarela te regresa el 100% de tu dinero directamente a tu cuenta bancaria.
+            </div>
+          </details>
+
+          <!-- Pregunta 6 -->
+          <details class="group bg-paper-base border border-slate-200 rounded-2xl transition-colors hover:border-edu-300">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer select-none font-bold text-slate-800 text-sm sm:text-base">
+              <span>¿Qué métodos de pago se aceptan?</span>
+              <svg class="faq-chevron w-5 h-5 text-edu-600 shrink-0 transition-transform duration-300 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 pt-3">
+              Aceptamos tarjeta de crédito, tarjeta de débito y métodos de pago en efectivo o transferencia según tu país. En tarjetas participantes dispones de pagos en cómodas cuotas mensuales.
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================= -->
+  <!-- 9. STICKY BOTTOM BAR (Móvil: Amigable y claro al scrollear)             -->
+  <!-- ======================================================================= -->
+  <div id="sticky-cta-bar" 
+       class="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 bg-white/95 border-t border-slate-200 backdrop-blur-lg transform translate-y-full transition-transform duration-300 ease-out md:hidden shadow-xl">
+    <div class="max-w-md mx-auto flex items-center justify-between gap-3">
+      <div class="min-w-0">
+        <span class="text-[10px] uppercase font-bold text-emerald-700 tracking-wider block">Acceso Inmediato</span>
+        <div class="text-base font-black text-slate-900">$3,500 MXN</div>
+      </div>
+      <a href="#oferta" 
+         class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-cta text-white font-bold text-sm shadow-md active:scale-95 shrink-0 transition-transform">
+        <span>Inscribirme Ahora</span>
+        <span>→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- FOOTER & AVISO LEGAL                                                    -->
+  <!-- ======================================================================= -->
+  <footer class="py-8 px-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white">
+    <div class="max-w-2xl mx-auto space-y-3">
+      <p class="text-slate-600">
+        © <span id="current-year"></span> Programa Digital Escalable con Gonzalo Salcedo. Todos los derechos reservados.
+      </p>
+      <p class="text-[11px] leading-relaxed text-slate-400">
+        Descargo de responsabilidad: Este sitio web no forma parte de Meta Platforms, Inc. ni de Facebook Inc. Además, este sitio NO está respaldado por Meta ni Facebook de ninguna manera. FACEBOOK es una marca comercial de META PLATFORMS, Inc. Los resultados varían según el esfuerzo, la habilidad y la dedicación de cada persona.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ======================================================================= -->
+  <!-- JAVASCRIPT DE CONVERSIÓN & TRACKING                                     -->
+  <!-- ======================================================================= -->
+  <script>
+    // Año automático en footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    /**
+     * Iniciar demostración de video VSL (Bunny.net Stream)
+     */
+    function startVideoDemo() {
+      const cover = document.getElementById('vsl-cover');
+      const container = document.getElementById('video-embed-container');
+      const iframe = document.getElementById('bunny-vsl-iframe');
+      
+      if (container && iframe) {
+        if (!iframe.src || iframe.src === '' || iframe.src === window.location.href) {
+          iframe.src = iframe.getAttribute('data-src');
+        }
+        cover.classList.add('hidden');
+        container.classList.remove('hidden');
+      } else {
+        const target = document.getElementById('oferta');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
+    /**
+     * Redirección a pasarela de Checkout con Stripe y tracking InitiateCheckout
+     */
+    async function handleCheckoutRedirect(event, source) {
+      if (event) event.preventDefault();
+
+      const btn = event.currentTarget || document.getElementById('checkout-cta');
+      const originalText = btn ? btn.innerHTML : '';
+      if (btn) btn.innerHTML = '<span>Preparando inscripción segura...</span>';
+
+      try {
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout', {
+            content_name: 'Programa Digital Escalable',
+            content_category: 'Educacion Digital',
+            value: COURSE_PRICE,
+            currency: COURSE_CURRENCY,
+            button_location: source
+          });
+        }
+      } catch (err) {
+        console.error('Meta Pixel error:', err);
+      }
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            courseId: 'curso-tutores',
+            courseTitle: 'Programa Digital Escalable',
+            price: COURSE_PRICE,
+            currency: COURSE_CURRENCY
+          })
+        });
+
+        const data = await res.json();
+        if (data && data.url) {
+          window.location.href = data.url;
+        } else {
+          // Si no hay API key en local, aviso claro y fallback a oferta
+          alert(data.error || 'Pasarela de pago en configuración. Contáctanos por WhatsApp para acceso prioritario.');
+          if (btn) btn.innerHTML = originalText;
+        }
+      } catch (err) {
+        console.error('Checkout error:', err);
+        // Fallback a enlace directo si está configurado
+        if (CHECKOUT_URL && !CHECKOUT_URL.includes('tu-enlace')) {
+          window.location.href = CHECKOUT_URL;
+        } else {
+          alert('Hubo un inconveniente al conectar con el servidor de pago. Por favor intenta de nuevo.');
+          if (btn) btn.innerHTML = originalText;
+        }
+      }
+    }
+
+    /**
+     * Soporte de dudas pre-compra vía WhatsApp
+     */
+    function handleWhatsAppSupport(event, source) {
+      if (event) event.preventDefault();
+
+      let redirected = false;
+      const performRedirect = () => {
+        if (!redirected) {
+          redirected = true;
+          window.location.href = WHATSAPP_SUPPORT_URL;
+        }
+      };
+
+      const fallbackTimer = setTimeout(performRedirect, 350);
+
+      try {
+        if (typeof fbq === 'function') {
+          fbq('track', 'Contact', {
+            content_name: 'Dudas Pre-Compra WhatsApp',
+            button_location: source
+          });
+        }
+      } catch (err) {}
+
+      setTimeout(() => {
+        clearTimeout(fallbackTimer);
+        performRedirect();
+      }, 150);
+    }
+
+    /**
+     * Observador para mostrar el CTA Sticky en móviles al salir del Hero
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.getElementById('hero');
+      const stickyBar = document.getElementById('sticky-cta-bar');
+
+      if (!hero || !stickyBar) return;
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+              stickyBar.classList.remove('translate-y-full');
+              stickyBar.classList.add('translate-y-0');
+            } else {
+              stickyBar.classList.add('translate-y-full');
+              stickyBar.classList.remove('translate-y-0');
+            }
+          });
+        }, { threshold: 0.15 });
+
+        observer.observe(hero);
+      } else {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 450) {
+            stickyBar.classList.remove('translate-y-full');
+            stickyBar.classList.add('translate-y-0');
+          } else {
+            stickyBar.classList.add('translate-y-full');
+            stickyBar.classList.remove('translate-y-0');
+          }
+        }, { passive: true });
+      }
+    });
+  </script>
+</body>
+</html>
