@@ -23,7 +23,17 @@ export async function POST(req: Request) {
     const productImages = origin && origin.startsWith("https://") ? [`${origin}/gonzalo-salcedo-office.webp`] : [];
 
     const session = await stripe.checkout.sessions.create({
+      mode: "payment",
       payment_method_types: ["card"],
+      adaptive_pricing: { enabled: true },
+      customer_creation: "always",
+      payment_method_options: {
+        card: {
+          installments: {
+            enabled: true,
+          },
+        },
+      },
       line_items: [
         {
           price_data: {
@@ -38,14 +48,12 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      mode: "payment",
       success_url: `${origin}/cursos/login?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/#oferta`,
       metadata: {
         courseId,
         courseTitle,
       },
-      customer_creation: "always",
     });
 
     return NextResponse.json({ url: session.url });

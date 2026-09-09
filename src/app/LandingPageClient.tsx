@@ -39,11 +39,11 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
     };
 
-    // 2. Registrar handleWhatsAppSupport en window
-    (window as any).handleWhatsAppSupport = (event?: any, source?: string) => {
+    // 2. Registrar handleWhatsAppSupport en window (abre el asistente Gonz directamente)
+    (window as any).handleWhatsAppSupport = (event?: any) => {
       if (event) event.preventDefault();
-      const whatsappUrl = "https://wa.me/521XXXXXXXXXX?text=Hola%20Gonzalo,%20tengo%20una%20duda%20antes%20de%20inscribirme%20al%20Programa%20Digital%20Escalable";
-      window.open(whatsappUrl, "_blank");
+      const chatBtn = document.getElementById("chatac-bubble-btn");
+      if (chatBtn) chatBtn.click();
     };
 
     // 3. Registrar handleCheckoutRedirect en window
