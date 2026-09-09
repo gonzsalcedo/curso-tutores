@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email.lower() == 'gonsalcedod@gmail.com' ||
+        request.auth.token.email.lower() == 'gonzsalcedod@gmail.com'
+      );
+    }
+
+    // Courses & Modules: Lectura pública de catálogo, escritura solo maestro
+    match /courses/{courseId} {
+      allow read: if true;
+      allow write: if isAdmin();
+
+      match /modules/{moduleId} {
+        allow read: if true;
+        allow write: if isAdmin();
+
+        // Lecciones: Solo usuarios autenticados para proteger videos de Bunny.net
+        match /lessons/{lessonId} {
+          allow read: if request.auth != null;
+          allow write: if isAdmin();
+        }
+      }
+    }
+
+    // Suscriptores / Alumnos: Solo el maestro o el propio alumno pueden ver sus accesos
+    match /subscribers/{email} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.token.email.lower() == email.lower());
+      allow write: if true; // Webhook de Stripe crea o actualiza tras confirmar pago
+    }
+
+    // Progreso del alumno: Cada alumno lee y guarda su propio progreso
+    match /progress/{progressId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

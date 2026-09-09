@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import LandingPageClient from "./LandingPageClient";
 
 export default function HomePage() {
   const filePath = path.join(process.cwd(), "index.html");
@@ -10,15 +11,9 @@ export default function HomePage() {
     console.error("Error loading index.html:", err);
   }
 
-  // Extraer el contenido de body y scripts
+  // Extraer el contenido de body
   const bodyContentMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
   const bodyContent = bodyContentMatch ? bodyContentMatch[1] : html;
 
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: bodyContent,
-      }}
-    />
-  );
+  return <LandingPageClient htmlContent={bodyContent} />;
 }

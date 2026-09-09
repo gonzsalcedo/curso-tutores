@@ -9,12 +9,70 @@
   --color-brand-600: #2563EB;
   --color-brand-700: #1D4ED8;
 
+  --color-edu-50: #EEF4FF;
+  --color-edu-100: #E0EBFF;
+  --color-edu-200: #C7D9FE;
+  --color-edu-300: #93C5FD;
+  --color-edu-500: #3B82F6;
+  --color-edu-600: #2563EB;
+  --color-edu-700: #1D4ED8;
+  --color-edu-800: #1E40AF;
+  --color-edu-900: #1E3A8A;
+
+  --color-cta: #059669;
+  --color-cta-hover: #047857;
+  --color-cta-light: #10B981;
+
+  --color-paper-base: #FAFAFC;
+  --color-paper-card: #FFFFFF;
+  --color-paper-border: #E2E8F0;
+  --color-paper-borderHover: #CBD5E1;
+
+  --color-textMain: #0F172A;
+  --color-textMuted: #475569;
+  --color-textSubtle: #64748B;
+
   --color-emerald-cta: #059669;
   --color-emerald-cta-hover: #047857;
 
   --color-admin-bg: #0B0F19;
   --color-admin-card: #111827;
   --color-admin-border: #1F2937;
+}
+
+/* Fallback utilities to guarantee vibrant buttons and legible text */
+.bg-cta {
+  background-color: #059669 !important;
+}
+.bg-cta:hover, .hover\:bg-cta-hover:hover {
+  background-color: #047857 !important;
+}
+.text-edu-700 {
+  color: #1D4ED8 !important;
+}
+.text-edu-800 {
+  color: #1E40AF !important;
+}
+.bg-edu-50 {
+  background-color: #EEF4FF !important;
+}
+.bg-edu-100 {
+  background-color: #E0EBFF !important;
+}
+.bg-edu-200 {
+  background-color: #C7D9FE !important;
+}
+.border-edu-100 {
+  border-color: #E0EBFF !important;
+}
+.border-edu-200 {
+  border-color: #C7D9FE !important;
+}
+.border-edu-600 {
+  border-color: #2563EB !important;
+}
+.decoration-edu-200 {
+  text-decoration-color: #C7D9FE !important;
 }
 
 html {

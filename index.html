@@ -222,28 +222,38 @@
         <!-- =================================================================== -->
         <div class="max-w-3xl mx-auto mb-10">
           <div class="relative rounded-2xl sm:rounded-3xl p-2 sm:p-3 bg-white border border-slate-200 shadow-xl">
-            <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-100">
+            <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 flex items-center justify-center border border-slate-100 group cursor-pointer" onclick="startVideoDemo()">
               
-              <!-- Video Placeholder Amigable -->
-              <div id="vsl-cover" class="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-t from-slate-950/90 via-slate-900/70 to-transparent">
-                <!-- Badge del Video -->
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/30 text-white text-xs font-semibold mb-3 backdrop-blur-sm">
+              <!-- Video Cover con Thumbnail Real y Botón Play Prominente -->
+              <div id="vsl-cover" class="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer select-none">
+                <!-- Imagen Miniatura Real del Video -->
+                <img src="/video-thumbnail.png" 
+                     alt="Miniatura del Video Demostración" 
+                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+
+                <!-- Overlay sutil para destacar el botón play sin oscurecer la miniatura -->
+                <div class="absolute inset-0 bg-slate-950/25 group-hover:bg-slate-950/15 transition-colors"></div>
+
+                <!-- Badge Superior del Video -->
+                <div class="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/20 text-white text-xs font-semibold mb-3 backdrop-blur-md shadow-md">
                   <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                   <span>DEMOSTRACIÓN RÁPIDA (3 MINUTOS)</span>
                 </div>
-                <h3 class="text-lg sm:text-2xl font-bold text-white max-w-lg mb-4 leading-snug">
-                  Mira cómo funciona un programa educativo automatizado por dentro
-                </h3>
-                
-                <!-- Botón Play Amigable -->
+
+                <!-- Botón Play Destacado -->
                 <button type="button" 
-                        onclick="startVideoDemo()"
-                        class="group relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-cta hover:bg-cta-hover text-white shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
+                        onclick="event.stopPropagation(); startVideoDemo();"
+                        aria-label="Reproducir video de demostración"
+                        class="relative z-10 flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-600 group-hover:bg-emerald-500 text-white shadow-2xl shadow-emerald-950/50 group-hover:scale-110 active:scale-95 transition-all duration-300">
                   <svg class="w-8 h-8 sm:w-10 sm:h-10 fill-current translate-x-0.5" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                   </svg>
                 </button>
-                <p class="text-xs text-slate-200 mt-4 font-medium">Haz clic para ver cómo se ve el sistema de alumnos y ventas</p>
+
+                <!-- Microtexto inferior amigable -->
+                <div class="relative z-10 mt-3 px-3.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-xs text-white font-medium shadow-sm">
+                  Haz clic para ver el recorrido por dentro ▶
+                </div>
               </div>
 
               <!-- Contenedor iframe para video real de Bunny.net Stream -->
@@ -267,9 +277,9 @@
         <!-- =================================================================== -->
         <div class="max-w-md mx-auto space-y-3.5">
           <a href="#oferta" 
-             class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-cta hover:bg-cta-hover text-white font-bold text-lg sm:text-xl shadow-lg shadow-emerald-700/20 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+             class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-lg sm:text-xl shadow-xl shadow-emerald-700/25 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
             <span>¡Quiero Crear Mi Curso Digital!</span>
-            <span class="group-hover:translate-x-1 transition-transform">→</span>
+            <span class="group-hover:translate-x-1 transition-transform font-black text-xl">→</span>
           </a>
 
           <!-- Microcopias de Confianza -->
@@ -437,8 +447,8 @@
               <strong class="text-slate-900">Totalmente compatible con tu trabajo actual:</strong> No necesitas renunciar a tus alumnos actuales. Puedes crear este programa en tus ratos libres como un ingreso extra que irá creciendo mes a mes.
             </div>
           </div>
-          <a href="#oferta" class="shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl bg-cta text-white font-bold text-xs sm:text-sm text-center hover:bg-cta-hover transition-colors shadow-sm">
-            Inscribirme Ahora
+          <a href="#oferta" class="shrink-0 w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-xs sm:text-sm text-center transition-colors shadow-md shadow-emerald-700/20">
+            Inscribirme Ahora →
           </a>
         </div>
 
@@ -844,12 +854,12 @@
 
           <!-- Botón de Pago Principal (Checkout) -->
           <div class="space-y-3">
-            <a href="#" 
+            <a href="#oferta" 
                onclick="handleCheckoutRedirect(event, 'pricing_box_main')"
                id="checkout-cta"
-               class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-cta hover:bg-cta-hover text-white font-bold text-lg sm:text-xl shadow-lg shadow-emerald-700/20 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+               class="shimmer-button group w-full inline-flex items-center justify-center gap-3 px-6 py-4 sm:py-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-extrabold text-lg sm:text-xl shadow-xl shadow-emerald-700/30 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
               <span>¡QUIERO INSCRIBIRME HOY!</span>
-              <span class="group-hover:translate-x-1 transition-transform">→</span>
+              <span class="group-hover:translate-x-1 transition-transform font-black text-xl">→</span>
             </a>
 
             <!-- Opción Secundaria: Dudas por WhatsApp -->
@@ -1016,7 +1026,7 @@
         <div class="text-base font-black text-slate-900">$3,500 MXN</div>
       </div>
       <a href="#oferta" 
-         class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-cta text-white font-bold text-sm shadow-md active:scale-95 shrink-0 transition-transform">
+         class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-sm shadow-md active:scale-95 shrink-0 transition-transform">
         <span>Inscribirme Ahora</span>
         <span>→</span>
       </a>
