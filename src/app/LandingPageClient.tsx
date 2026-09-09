@@ -195,20 +195,11 @@ export default function LandingPageClient({ htmlContent }: Props) {
             </div>
             <h3 className="text-xl font-bold text-slate-900">{modalNotice.title}</h3>
             <p className="text-sm text-slate-600 leading-relaxed">{modalNotice.message}</p>
-            <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
-              <a
-                href="https://wa.me/521XXXXXXXXXX?text=Hola%20Gonzalo,%20quiero%20inscribirme%20al%20Programa%20Digital%20Escalable"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-colors"
-              >
-                <span>Inscribirme por WhatsApp</span>
-                <span>→</span>
-              </a>
+            <div className="pt-2">
               <button
                 type="button"
                 onClick={() => setModalNotice({ open: false, title: "", message: "" })}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition-colors"
+                className="w-full px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition-colors"
               >
                 Cerrar
               </button>
