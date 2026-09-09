@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { CURRENCIES, COUNTRY_CURRENCY_MAP, CurrencyConfig } from "@/lib/currencies";
 
 interface Props {
   htmlContent: string;
@@ -18,7 +19,160 @@ export default function LandingPageClient({ htmlContent }: Props) {
   });
 
   useEffect(() => {
-    // 1. Registrar startVideoDemo en window
+    let currentCurrencyCode = "mxn";
+    let currentUsdPlan = "single";
+
+    // 1. Función para actualizar todos los campos dinámicos en el DOM
+    const updateDOMForCurrency = (currCode: string, usdPlan = "single") => {
+      const config: CurrencyConfig = CURRENCIES[currCode.toLowerCase()] || CURRENCIES.mxn;
+      currentCurrencyCode = config.code;
+      currentUsdPlan = usdPlan;
+
+      // Dropdown button pill
+      const flagEl = document.getElementById("active-currency-flag");
+      const labelEl = document.getElementById("active-currency-label");
+      if (flagEl) flagEl.textContent = config.flag;
+      if (labelEl) labelEl.textContent = config.label;
+
+      // Tabla Comparativa
+      const hourlyEl = document.querySelector('[data-field="table-hourly-rate"]');
+      if (hourlyEl) hourlyEl.textContent = config.table.hourlyRate;
+
+      const tradMonthlyEl = document.querySelector('[data-field="table-traditional-monthly"]');
+      if (tradMonthlyEl) tradMonthlyEl.textContent = config.table.traditionalMonthly;
+
+      const coursePriceEl = document.querySelector('[data-field="table-course-price"]');
+      if (coursePriceEl) coursePriceEl.textContent = config.table.courseSellingPrice;
+
+      const scalableMonthlyEl = document.querySelector('[data-field="table-scalable-monthly"]');
+      if (scalableMonthlyEl) scalableMonthlyEl.textContent = config.table.scalableMonthly;
+
+      // Bono 1 individual
+      const bonus1IndEl = document.querySelector('[data-field="bonus1-individual-value"]');
+      if (bonus1IndEl) bonus1IndEl.textContent = `Valor: ${config.stack.bonus1Value}`;
+
+      // Stack de Oferta
+      const stackProgEl = document.querySelector('[data-field="stack-program"]');
+      if (stackProgEl) stackProgEl.textContent = config.stack.programValue;
+
+      const stackB1El = document.querySelector('[data-field="stack-bonus1"]');
+      if (stackB1El) stackB1El.textContent = config.stack.bonus1Value;
+
+      const stackB2El = document.querySelector('[data-field="stack-bonus2"]');
+      if (stackB2El) stackB2El.textContent = config.stack.bonus2Value;
+
+      const stackB3El = document.querySelector('[data-field="stack-bonus3"]');
+      if (stackB3El) stackB3El.textContent = config.stack.bonus3Value;
+
+      const stackTotalEl = document.querySelector('[data-field="stack-total"]');
+      if (stackTotalEl) stackTotalEl.textContent = config.stack.totalRealValue;
+
+      // Precio en caja de oferta
+      const priceAmountEl = document.querySelector('[data-field="price-amount"]');
+      const priceCurrEl = document.querySelector('[data-field="price-currency"]');
+      if (priceAmountEl) {
+        if (config.code === "usd" && usdPlan === "split_3") {
+          priceAmountEl.textContent = "3x $130";
+        } else {
+          priceAmountEl.textContent = config.stack.officialPriceDisplay;
+        }
+      }
+      if (priceCurrEl) priceCurrEl.textContent = config.stack.currencySuffix;
+
+      // Badge MSI o Nota
+      const instNoteEl = document.querySelector('[data-field="installments-note"]');
+      const msiBadgeEl = document.getElementById("msi-badge");
+      if (instNoteEl) {
+        if (config.allowsMSI) {
+          instNoteEl.innerHTML = "Se aceptan <strong>Meses Sin Intereses</strong> con tarjetas de crédito participantes";
+          msiBadgeEl?.classList.remove("bg-slate-100", "text-slate-800", "border-slate-200");
+          msiBadgeEl?.classList.add("bg-emerald-50", "text-emerald-900", "border-emerald-200");
+        } else {
+          instNoteEl.textContent = config.stack.installmentsNote;
+          msiBadgeEl?.classList.remove("bg-emerald-50", "text-emerald-900", "border-emerald-200");
+          msiBadgeEl?.classList.add("bg-slate-100", "text-slate-800", "border-slate-200");
+        }
+      }
+
+      // Selector de planes USD (mostrar solo en USD)
+      const usdOptionsEl = document.getElementById("usd-payment-options");
+      if (usdOptionsEl) {
+        if (config.code === "usd") {
+          usdOptionsEl.classList.remove("hidden");
+        } else {
+          usdOptionsEl.classList.add("hidden");
+        }
+      }
+
+      // Estilos activos en opciones de radio USD
+      const labelSingle = document.getElementById("label-usd-single");
+      const labelSplit = document.getElementById("label-usd-split");
+      if (labelSingle && labelSplit) {
+        if (usdPlan === "split_3") {
+          labelSplit.classList.add("border-emerald-500", "ring-2", "ring-emerald-500/20");
+          labelSplit.classList.remove("border-slate-200");
+          labelSingle.classList.remove("border-emerald-500", "ring-2", "ring-emerald-500/20");
+          labelSingle.classList.add("border-slate-200");
+        } else {
+          labelSingle.classList.add("border-emerald-500", "ring-2", "ring-emerald-500/20");
+          labelSingle.classList.remove("border-slate-200");
+          labelSplit.classList.remove("border-emerald-500", "ring-2", "ring-emerald-500/20");
+          labelSplit.classList.add("border-slate-200");
+        }
+      }
+
+      // Actualizar Sticky Bar móvil
+      const stickyPriceEl = document.querySelector('[data-field="sticky-price"]');
+      const stickyNoteEl = document.querySelector('[data-field="sticky-note"]');
+      if (stickyPriceEl) {
+        if (config.code === "usd" && usdPlan === "split_3") {
+          stickyPriceEl.textContent = "3x $130 USD";
+        } else {
+          stickyPriceEl.textContent = `${config.stack.officialPriceDisplay} ${config.stack.currencySuffix}`;
+        }
+      }
+      if (stickyNoteEl) {
+        if (config.allowsMSI) {
+          stickyNoteEl.textContent = "Hasta MSI con tarjetas participantes";
+        } else if (config.code === "usd" && usdPlan === "split_3") {
+          stickyNoteEl.textContent = "3 pagos diferidos de $130 USD";
+        } else {
+          stickyNoteEl.textContent = "Acceso completo e ilimitado";
+        }
+      }
+
+      // Actualizar texto del botón principal CTA
+      const ctaText = document.getElementById("checkout-cta-text");
+      if (ctaText) {
+        if (config.code === "usd" && usdPlan === "split_3") {
+          ctaText.textContent = "¡INSCRIBIRME EN 3 PAGOS DE $130 USD!";
+        } else {
+          ctaText.textContent = "¡QUIERO INSCRIBIRME HOY!";
+        }
+      }
+    };
+
+    // 2. Registrar funciones en window para que los botones de la landing interactúen
+    (window as any).toggleCurrencyDropdown = (e?: Event) => {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById("currency-dropdown-menu");
+      if (menu) menu.classList.toggle("hidden");
+    };
+
+    (window as any).selectCurrency = (code: string) => {
+      try {
+        localStorage.setItem("curso_tutores_currency", code);
+      } catch {}
+      updateDOMForCurrency(code, "single");
+      const menu = document.getElementById("currency-dropdown-menu");
+      if (menu) menu.classList.add("hidden");
+    };
+
+    (window as any).handleUsdPlanChange = (plan: string) => {
+      updateDOMForCurrency("usd", plan);
+    };
+
+    // 3. Registrar startVideoDemo en window
     (window as any).startVideoDemo = () => {
       const cover = document.getElementById("vsl-cover");
       const container = document.getElementById("video-embed-container");
@@ -39,14 +193,14 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
     };
 
-    // 2. Registrar handleWhatsAppSupport en window (abre el asistente Gonz directamente)
+    // 4. Registrar handleWhatsAppSupport en window (abre el asistente Gonz directamente)
     (window as any).handleWhatsAppSupport = (event?: any) => {
       if (event) event.preventDefault();
       const chatBtn = document.getElementById("chatac-bubble-btn");
       if (chatBtn) chatBtn.click();
     };
 
-    // 3. Registrar handleCheckoutRedirect en window
+    // 5. Registrar handleCheckoutRedirect en window con multi-divisa y plan diferido
     (window as any).handleCheckoutRedirect = async (event?: any, source?: string) => {
       if (event) event.preventDefault();
 
@@ -57,13 +211,17 @@ export default function LandingPageClient({ htmlContent }: Props) {
         btn.style.pointerEvents = "none";
       }
 
+      const config: CurrencyConfig = CURRENCIES[currentCurrencyCode] || CURRENCIES.mxn;
+      const isSplitUSD = config.code === "usd" && currentUsdPlan === "split_3";
+      const chargeValue = isSplitUSD ? (config.splitPrice || 130) : config.price;
+
       try {
         if (typeof (window as any).fbq === "function") {
           (window as any).fbq("track", "InitiateCheckout", {
             content_name: "Programa Digital Escalable",
             content_category: "Educacion Digital",
-            value: 3500.0,
-            currency: "MXN",
+            value: chargeValue,
+            currency: config.code.toUpperCase(),
             button_location: source || "pricing_box_main",
           });
         }
@@ -77,9 +235,11 @@ export default function LandingPageClient({ htmlContent }: Props) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             courseId: "curso-tutores",
-            courseTitle: "Programa Digital Escalable",
-            price: 3500,
-            currency: "MXN",
+            courseTitle: isSplitUSD
+              ? "Curso Digital Escalable - Plan 3 Pagos Mensuales"
+              : "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
+            currency: config.code,
+            plan: isSplitUSD ? "split_3" : "single",
           }),
         });
 
@@ -90,7 +250,6 @@ export default function LandingPageClient({ htmlContent }: Props) {
           return;
         }
 
-        // Si Stripe aún no tiene STRIPE_SECRET_KEY en el servidor local
         setModalNotice({
           open: true,
           title: "Configuración de Pasarela Stripe",
@@ -114,7 +273,82 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
     };
 
-    // 4. Delegación de eventos para clicks en botones de la landing
+    // 6. Detección Inteligente de País / Divisa
+    async function autoDetectCurrency() {
+      // A. Revisar URL param (e.g. ?currency=usd o ?currency=cop)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const pCurr = params.get("currency")?.toLowerCase();
+        if (pCurr && CURRENCIES[pCurr]) {
+          updateDOMForCurrency(pCurr, "single");
+          return;
+        }
+      } catch {}
+
+      // B. Revisar localStorage previo
+      try {
+        const saved = localStorage.getItem("curso_tutores_currency")?.toLowerCase();
+        if (saved && CURRENCIES[saved]) {
+          updateDOMForCurrency(saved, "single");
+          return;
+        }
+      } catch {}
+
+      // C. Endpoint interno rápido /api/geo
+      try {
+        const geoRes = await fetch("/api/geo", { signal: AbortSignal.timeout(1200) });
+        if (geoRes.ok) {
+          const geoData = await geoRes.json();
+          if (geoData.currency && CURRENCIES[geoData.currency]) {
+            updateDOMForCurrency(geoData.currency, "single");
+            return;
+          }
+        }
+      } catch {}
+
+      // D. Fallback externo de geolocalización por IP
+      const apis = [
+        { url: "https://api.country.is/", extract: (d: any) => d.country },
+        { url: "https://freeipapi.com/api/json", extract: (d: any) => d.countryCode },
+        { url: "https://ipapi.co/json/", extract: (d: any) => d.country_code },
+      ];
+
+      try {
+        const detectedCountry = await Promise.any(
+          apis.map(async (api) => {
+            const res = await fetch(api.url, { signal: AbortSignal.timeout(1200) });
+            if (!res.ok) throw new Error("API error");
+            const data = await res.json();
+            const code = api.extract(data);
+            if (!code) throw new Error("No code");
+            return String(code).toUpperCase();
+          })
+        );
+
+        if (detectedCountry && COUNTRY_CURRENCY_MAP[detectedCountry]) {
+          const matchedCurr = COUNTRY_CURRENCY_MAP[detectedCountry];
+          updateDOMForCurrency(matchedCurr, "single");
+          return;
+        }
+      } catch {}
+
+      // E. Default a MXN
+      updateDOMForCurrency("mxn", "single");
+    }
+
+    autoDetectCurrency();
+
+    // 7. Click fuera del menú dropdown para cerrarlo
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("#currency-dropdown-btn") && !target.closest("#currency-dropdown-menu")) {
+        const menu = document.getElementById("currency-dropdown-menu");
+        if (menu) menu.classList.add("hidden");
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+
+    // 8. Delegación de eventos para clicks en botones de la landing
     const handleDocumentClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target) return;
@@ -147,7 +381,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
 
     document.addEventListener("click", handleDocumentClick);
 
-    // 5. Observer para barra sticky inferior móvil
+    // 9. Observer para barra sticky inferior móvil
     const hero = document.getElementById("hero");
     const stickyBar = document.getElementById("sticky-cta-bar");
 
@@ -170,7 +404,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
       observer.observe(hero);
     }
 
-    // 4. Inyectar Widget de ChatAC (Asistente Gonz) de forma dinámica
+    // 10. Inyectar Widget de ChatAC (Asistente Gonz) de forma dinámica
     if (!document.getElementById("chatac-widget-container") && !document.getElementById("chatac-active-script")) {
       const script = document.createElement("script");
       script.id = "chatac-active-script";
@@ -181,6 +415,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
     }
 
     return () => {
+      document.removeEventListener("click", handleOutsideClick);
       document.removeEventListener("click", handleDocumentClick);
       if (observer && hero) {
         observer.unobserve(hero);

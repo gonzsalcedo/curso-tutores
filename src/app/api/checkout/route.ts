@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendMetaConversionEvent } from "@/lib/metaConversions";
+import { CURRENCIES, CurrencyConfig } from "@/lib/currencies";
 
 export async function POST(req: Request) {
   try {
@@ -17,49 +18,78 @@ export async function POST(req: Request) {
     });
 
     const body = await req.json().catch(() => ({}));
-    
-    // Catálogo blindado en servidor: previene manipulación de precios desde el cliente
-    const CATALOG: Record<string, { price: number; currency: string; title: string }> = {
-      "curso-tutores": {
-        price: 3500,
-        currency: "mxn",
-        title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
-      },
-    };
+    const requestedCurrency = typeof body.currency === "string" ? body.currency.toLowerCase() : "mxn";
+    const currencyConfig: CurrencyConfig = CURRENCIES[requestedCurrency] || CURRENCIES.mxn;
+    const currency = currencyConfig.code;
 
-    const requestedCourseId = typeof body.courseId === "string" ? body.courseId : "curso-tutores";
-    const courseItem = CATALOG[requestedCourseId] || CATALOG["curso-tutores"];
-    const courseId = requestedCourseId;
-    const courseTitle = courseItem.title;
-    const price = courseItem.price;
-    const currency = courseItem.currency;
+    // Plan diferido: solo disponible para USD (3 pagos de $130 USD)
+    const isSplitUSD = currency === "usd" && body.plan === "split_3";
 
     const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_BASE_URL || "https://tutor.gonzsalcedo.com";
-
     const productImages = origin && origin.startsWith("https://") ? [`${origin}/gonzalo-salcedo-office.webp`] : [];
 
+    const courseId = typeof body.courseId === "string" ? body.courseId : "curso-tutores";
+    const courseTitle = isSplitUSD
+      ? "Curso Digital Escalable - Plan 3 Pagos Mensuales"
+      : "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad";
+    const productDesc = isSplitUSD
+      ? "Acceso completo e ilimitado de por vida. Pago dividido en 3 cuotas mensuales de $130 USD."
+      : "Acceso completo e ilimitado de por vida al programa de creación y venta de cursos digitales.";
+
+    const unitAmount = isSplitUSD
+      ? (currencyConfig.splitUnitAmount || 13000)
+      : currencyConfig.unitAmount;
+
+    const chargeAmountNumber = isSplitUSD
+      ? (currencyConfig.splitPrice || 130)
+      : currencyConfig.price;
+
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
+      mode: isSplitUSD ? "subscription" : "payment",
       payment_method_types: ["card"],
-      adaptive_pricing: { enabled: true },
-      customer_creation: "always",
-      payment_method_options: {
-        card: {
-          installments: {
-            enabled: true,
-          },
-        },
-      },
+      ...(isSplitUSD
+        ? {
+            subscription_data: {
+              metadata: {
+                courseId,
+                courseTitle,
+                plan: "split_3",
+              },
+            },
+          }
+        : {
+            adaptive_pricing: { enabled: true },
+            customer_creation: "always",
+            ...(currencyConfig.allowsMSI
+              ? {
+                  payment_method_options: {
+                    card: {
+                      installments: {
+                        enabled: true,
+                      },
+                    },
+                  },
+                }
+              : {}),
+          }),
       line_items: [
         {
           price_data: {
             currency: currency.toLowerCase(),
             product_data: {
               name: courseTitle,
-              description: "Acceso completo e ilimitado al programa de creación y venta de cursos digitales.",
+              description: productDesc,
               ...(productImages.length > 0 ? { images: productImages } : {}),
             },
-            unit_amount: price * 100, // centavos
+            unit_amount: unitAmount,
+            ...(isSplitUSD
+              ? {
+                  recurring: {
+                    interval: "month",
+                    interval_count: 1,
+                  },
+                }
+              : {}),
           },
           quantity: 1,
         },
@@ -69,6 +99,8 @@ export async function POST(req: Request) {
       metadata: {
         courseId,
         courseTitle,
+        currency,
+        plan: isSplitUSD ? "split_3" : "single",
       },
     });
 
@@ -81,8 +113,8 @@ export async function POST(req: Request) {
       eventId: session.id,
       clientIp,
       userAgent,
-      value: price,
-      currency,
+      value: chargeAmountNumber,
+      currency: currency.toUpperCase(),
       courseTitle,
     }).catch((err) => console.error("Error CAPI InitiateCheckout:", err));
 

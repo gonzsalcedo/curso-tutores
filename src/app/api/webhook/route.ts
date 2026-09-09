@@ -91,8 +91,10 @@ export async function POST(req: Request) {
       await enrollStudentViaRest(email, name, courseId);
 
       // Reportar conversión de compra a Meta CAPI (Server-Side)
-      const amountTotal = session.amount_total ? session.amount_total / 100 : 3500;
       const currency = session.currency ? session.currency.toUpperCase() : "MXN";
+      const isZeroDecimal = currency.toLowerCase() === "clp";
+      const rawAmount = session.amount_total || 0;
+      const amountTotal = rawAmount > 0 ? (isZeroDecimal ? rawAmount : rawAmount / 100) : 3500;
       const phone = session.customer_details?.phone || undefined;
 
       await sendMetaConversionEvent({
