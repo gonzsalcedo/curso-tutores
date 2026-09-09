@@ -159,17 +159,9 @@ export default function LandingPageClient({ htmlContent }: Props) {
 
     // 3. Registrar startVideoDemo en window
     (window as any).startVideoDemo = () => {
-      const cover = document.getElementById("vsl-cover");
-      const container = document.getElementById("video-embed-container");
-      const iframe = document.getElementById("bunny-vsl-iframe") as HTMLIFrameElement | null;
-
-      if (container && iframe) {
-        const dataSrc = iframe.getAttribute("data-src") || "";
-        if (!iframe.src || iframe.src === "" || iframe.src === window.location.href) {
-          iframe.src = dataSrc;
-        }
-        cover?.classList.add("hidden");
-        container.classList.remove("hidden");
+      const iframe = document.getElementById("bunny-vsl-iframe");
+      if (iframe) {
+        iframe.scrollIntoView({ behavior: "smooth", block: "center" });
       } else {
         const target = document.getElementById("oferta");
         if (target) {
