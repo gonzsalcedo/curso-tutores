@@ -152,22 +152,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
     };
 
-    // 2. Registrar funciones en window para que los botones de la landing interactúen
-    (window as any).toggleCurrencyDropdown = (e?: Event) => {
-      if (e) e.stopPropagation();
-      const menu = document.getElementById("currency-dropdown-menu");
-      if (menu) menu.classList.toggle("hidden");
-    };
-
-    (window as any).selectCurrency = (code: string) => {
-      try {
-        localStorage.setItem("curso_tutores_currency", code);
-      } catch {}
-      updateDOMForCurrency(code, "single");
-      const menu = document.getElementById("currency-dropdown-menu");
-      if (menu) menu.classList.add("hidden");
-    };
-
+    // 2. Registrar selector de modalidad diferida para USD
     (window as any).handleUsdPlanChange = (plan: string) => {
       updateDOMForCurrency("usd", plan);
     };
@@ -285,16 +270,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         }
       } catch {}
 
-      // B. Revisar localStorage previo
-      try {
-        const saved = localStorage.getItem("curso_tutores_currency")?.toLowerCase();
-        if (saved && CURRENCIES[saved]) {
-          updateDOMForCurrency(saved, "single");
-          return;
-        }
-      } catch {}
-
-      // C. Endpoint interno rápido /api/geo
+      // B. Endpoint interno nativo de Vercel por IP (/api/geo)
       try {
         const geoRes = await fetch("/api/geo", { signal: AbortSignal.timeout(1200) });
         if (geoRes.ok) {
@@ -306,7 +282,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         }
       } catch {}
 
-      // D. Fallback externo de geolocalización por IP
+      // C. Fallback de geolocalización por IP
       const apis = [
         { url: "https://api.country.is/", extract: (d: any) => d.country },
         { url: "https://freeipapi.com/api/json", extract: (d: any) => d.countryCode },
@@ -332,21 +308,11 @@ export default function LandingPageClient({ htmlContent }: Props) {
         }
       } catch {}
 
-      // E. Default a MXN
+      // D. Default a MXN
       updateDOMForCurrency("mxn", "single");
     }
 
     autoDetectCurrency();
-
-    // 7. Click fuera del menú dropdown para cerrarlo
-    const handleOutsideClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest("#currency-dropdown-btn") && !target.closest("#currency-dropdown-menu")) {
-        const menu = document.getElementById("currency-dropdown-menu");
-        if (menu) menu.classList.add("hidden");
-      }
-    };
-    document.addEventListener("click", handleOutsideClick);
 
     // 8. Delegación de eventos para clicks en botones de la landing
     const handleDocumentClick = (e: MouseEvent) => {
@@ -415,7 +381,6 @@ export default function LandingPageClient({ htmlContent }: Props) {
     }
 
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
       document.removeEventListener("click", handleDocumentClick);
       if (observer && hero) {
         observer.unobserve(hero);

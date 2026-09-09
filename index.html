@@ -854,54 +854,6 @@
         
         <div class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-9 shadow-[0_15px_45px_-10px_rgba(15,23,42,0.08)] relative overflow-hidden ring-1 ring-slate-950/5">
           
-          <!-- Selector Dinámico de Moneda / Región -->
-          <div class="flex items-center justify-center mb-4">
-            <div class="relative inline-block text-left">
-              <button type="button" 
-                      id="currency-dropdown-btn"
-                      onclick="toggleCurrencyDropdown(event)"
-                      class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800 text-xs font-semibold shadow-2xs transition-all cursor-pointer">
-                <span id="active-currency-flag">🇲🇽</span>
-                <span id="active-currency-label">México (MXN)</span>
-                <span class="text-[10px] text-slate-500">▼</span>
-              </button>
-              <div id="currency-dropdown-menu" 
-                   class="hidden absolute left-1/2 -translate-x-1/2 mt-2 w-60 rounded-2xl bg-white border border-slate-200 shadow-2xl py-1.5 z-40 ring-1 ring-black/5 text-xs font-medium">
-                <div class="px-3.5 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
-                  Selecciona tu país / moneda
-                </div>
-                <button type="button" onclick="selectCurrency('mxn')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇲🇽 México (MXN)</span>
-                  <span class="font-bold text-emerald-700">$3,500</span>
-                </button>
-                <button type="button" onclick="selectCurrency('usd')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇺🇸 Internacional (USD)</span>
-                  <span class="font-bold text-emerald-700">$350</span>
-                </button>
-                <button type="button" onclick="selectCurrency('cop')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇨🇴 Colombia (COP)</span>
-                  <span class="font-bold text-emerald-700">$1,450,000</span>
-                </button>
-                <button type="button" onclick="selectCurrency('clp')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇨🇱 Chile (CLP)</span>
-                  <span class="font-bold text-emerald-700">$340,000</span>
-                </button>
-                <button type="button" onclick="selectCurrency('pen')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇵🇪 Perú (PEN)</span>
-                  <span class="font-bold text-emerald-700">S/ 1,290</span>
-                </button>
-                <button type="button" onclick="selectCurrency('uyu')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇺🇾 Uruguay (UYU)</span>
-                  <span class="font-bold text-emerald-700">$14,500</span>
-                </button>
-                <button type="button" onclick="selectCurrency('eur')" class="w-full text-left px-3.5 py-2 hover:bg-edu-50 flex items-center justify-between text-slate-700 hover:text-edu-900 transition-colors cursor-pointer">
-                  <span>🇪🇺 Europa (EUR)</span>
-                  <span class="font-bold text-emerald-700">320 €</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
           <!-- Header de la Tarjeta -->
           <div class="text-center mb-6">
             <span class="inline-block px-3 py-1 rounded-full bg-edu-50 text-edu-800 text-xs font-bold uppercase tracking-wider mb-3">
