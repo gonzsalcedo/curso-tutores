@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { sendMetaConversionEvent } from "@/lib/metaConversions";
 
 export async function POST(req: Request) {
   try {
@@ -55,6 +56,20 @@ export async function POST(req: Request) {
         courseTitle,
       },
     });
+
+    // Reportar InitiateCheckout en backend para máxima cobertura de atribución
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined;
+    const userAgent = req.headers.get("user-agent") || undefined;
+
+    sendMetaConversionEvent({
+      eventName: "InitiateCheckout",
+      eventId: session.id,
+      clientIp,
+      userAgent,
+      value: price,
+      currency,
+      courseTitle,
+    }).catch((err) => console.error("Error CAPI InitiateCheckout:", err));
 
     return NextResponse.json({ url: session.url });
   } catch (error: any) {

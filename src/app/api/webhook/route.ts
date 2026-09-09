@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { sendMetaConversionEvent } from "@/lib/metaConversions";
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -87,6 +88,22 @@ export async function POST(req: Request) {
 
     if (email) {
       await enrollStudentViaRest(email, name, courseId);
+
+      // Reportar conversión de compra a Meta CAPI (Server-Side)
+      const amountTotal = session.amount_total ? session.amount_total / 100 : 3500;
+      const currency = session.currency ? session.currency.toUpperCase() : "MXN";
+      const phone = session.customer_details?.phone || undefined;
+
+      await sendMetaConversionEvent({
+        eventName: "Purchase",
+        eventId: session.id,
+        email,
+        name,
+        phone,
+        value: amountTotal,
+        currency,
+        courseTitle: session.metadata?.courseTitle || "Curso Digital Escalable",
+      });
     }
   }
 
