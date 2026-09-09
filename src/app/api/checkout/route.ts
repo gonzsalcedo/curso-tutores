@@ -17,9 +17,24 @@ export async function POST(req: Request) {
     });
 
     const body = await req.json().catch(() => ({}));
-    const { courseId = "curso-tutores", courseTitle = "Curso Digital Escalable", price = 3500, currency = "mxn" } = body;
+    
+    // Catálogo blindado en servidor: previene manipulación de precios desde el cliente
+    const CATALOG: Record<string, { price: number; currency: string; title: string }> = {
+      "curso-tutores": {
+        price: 3500,
+        currency: "mxn",
+        title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
+      },
+    };
 
-    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const requestedCourseId = typeof body.courseId === "string" ? body.courseId : "curso-tutores";
+    const courseItem = CATALOG[requestedCourseId] || CATALOG["curso-tutores"];
+    const courseId = requestedCourseId;
+    const courseTitle = courseItem.title;
+    const price = courseItem.price;
+    const currency = courseItem.currency;
+
+    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_BASE_URL || "https://tutor.gonzsalcedo.com";
 
     const productImages = origin && origin.startsWith("https://") ? [`${origin}/gonzalo-salcedo-office.webp`] : [];
 

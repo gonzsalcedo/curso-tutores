@@ -2,6 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   getCourse,
   getModules,
@@ -20,6 +21,7 @@ import {
 export default function CourseCurriculumPage({ params }: { params: Promise<{ courseId: string }> }) {
   const resolvedParams = use(params);
   const courseId = resolvedParams.courseId;
+  const { user } = useAuth();
 
   const [course, setCourse] = useState<Course | null>(null);
   const [modules, setModules] = useState<Module[]>([]);
@@ -160,10 +162,14 @@ export default function CourseCurriculumPage({ params }: { params: Promise<{ cou
     setUploadStatus("1/3 Inicializando video en biblioteca de Bunny.net...");
 
     try {
-      // 1. Obtener upload URL y Video ID desde nuestra API
+      // 1. Obtener upload URL y Video ID desde nuestra API protegida
+      const idToken = user ? await user.getIdToken() : "";
       const initRes = await fetch("/api/upload-video", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(idToken ? { Authorization: `Bearer ${idToken}` } : {}),
+        },
         body: JSON.stringify({ title: lessonTitle || file.name }),
       });
 

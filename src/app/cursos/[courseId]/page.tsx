@@ -10,6 +10,7 @@ import {
   getLessons,
   getStudentProgress,
   toggleLessonCompletion,
+  checkStudentAccess,
   Course,
   Module,
   Lesson,
@@ -19,7 +20,7 @@ export default function VirtualClassroomPage({ params }: { params: Promise<{ cou
   const resolvedParams = use(params);
   const courseId = resolvedParams.courseId;
 
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, isAdmin } = useAuth();
   const router = useRouter();
 
   const [course, setCourse] = useState<Course | null>(null);
@@ -27,6 +28,7 @@ export default function VirtualClassroomPage({ params }: { params: Promise<{ cou
   const [lessonsMap, setLessonsMap] = useState<Record<string, Lesson[]>>({});
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -39,6 +41,17 @@ export default function VirtualClassroomPage({ params }: { params: Promise<{ cou
     async function loadCurriculum() {
       setLoading(true);
       try {
+        if (!isAdmin && user?.email) {
+          const access = await checkStudentAccess(user.email, courseId);
+          setHasAccess(access);
+          if (!access) {
+            setLoading(false);
+            return;
+          }
+        } else if (isAdmin) {
+          setHasAccess(true);
+        }
+
         const [c, mods, prog] = await Promise.all([
           getCourse(courseId),
           getModules(courseId),
@@ -108,6 +121,36 @@ export default function VirtualClassroomPage({ params }: { params: Promise<{ cou
     return (
       <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!isAdmin && hasAccess === false) {
+    return (
+      <div className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center justify-center px-6 py-12">
+        <div className="max-w-md w-full text-center bg-slate-900/80 border border-slate-800 p-8 rounded-2xl shadow-2xl backdrop-blur-md">
+          <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-3xl mx-auto mb-4">
+            🔒
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Acceso No Activo</h2>
+          <p className="text-slate-400 text-sm mb-6 leading-relaxed">
+            Tu cuenta (<strong className="text-slate-200">{user?.email}</strong>) no cuenta con inscripción activa a este curso. Si realizaste tu pago con otro correo, inicia sesión con esa cuenta.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/#oferta"
+              className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-colors shadow-lg shadow-emerald-600/30"
+            >
+              Inscribirme al Curso →
+            </Link>
+            <Link
+              href="/cursos"
+              className="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-sm transition-colors"
+            >
+              Volver a Mis Cursos
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

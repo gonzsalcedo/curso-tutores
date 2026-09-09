@@ -275,3 +275,23 @@ export async function revokeCourseAccess(email: string, courseId: string): Promi
     });
   }
 }
+
+/**
+ * Valida si un alumno específico tiene acceso activo al curso
+ */
+export async function checkStudentAccess(email: string, courseId: string): Promise<boolean> {
+  if (!email) return false;
+  try {
+    const cleanEmail = email.toLowerCase().trim();
+    const ref = doc(db, "subscribers", cleanEmail);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return false;
+    const data = snap.data();
+    const enrolled: string[] = data.enrolledCourses || (data.courseId ? [data.courseId] : []);
+    return enrolled.includes(courseId);
+  } catch (err) {
+    console.error("Error al validar acceso de alumno:", err);
+    return false;
+  }
+}
+

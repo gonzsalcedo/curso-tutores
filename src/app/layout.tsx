@@ -20,6 +20,28 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://tutor.gonzsalcedo.com"),
   title: "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
   description: "Aprende a empaquetar tu conocimiento, habilidad u oficio en un curso digital automatizado y escalable. Enseña a más alumnos con total libertad.",
+  keywords: [
+    "curso para tutores",
+    "crear curso digital",
+    "vender cursos online",
+    "clases particulares escalables",
+    "academia online",
+    "Gonzalo Salcedo",
+  ],
+  alternates: {
+    canonical: "https://tutor.gonzsalcedo.com",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>",
   },
@@ -94,6 +116,44 @@ fbq('track', 'PageView');`}
             gtag('config', 'G-52ZBRL8QM0');
           `}
         </Script>
+
+        {/* Schema.org Structured Data (Google Rich Snippets) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Course",
+                  "name": "Curso Digital Escalable: Convierte lo que Sabes en un Negocio Educativo con Libertad",
+                  "description": "Aprende a empaquetar tu conocimiento, habilidad u oficio en un curso digital automatizado y escalable.",
+                  "provider": {
+                    "@type": "Person",
+                    "name": "Gonzalo Salcedo",
+                    "url": "https://tutor.gonzsalcedo.com",
+                  },
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "3500",
+                    "priceCurrency": "MXN",
+                    "availability": "https://schema.org/InStock",
+                    "url": "https://tutor.gonzsalcedo.com",
+                  },
+                  "inLanguage": "es",
+                  "educationalCredentialAwarded": "Acceso ilimitado de por vida al aula virtual y plantillas",
+                },
+                {
+                  "@type": "Person",
+                  "name": "Gonzalo Salcedo",
+                  "jobTitle": "Educador Digital y Consultor de Negocios de Enseñanza",
+                  "url": "https://tutor.gonzsalcedo.com",
+                  "image": "https://tutor.gonzsalcedo.com/gonzalo-salcedo-office.webp",
+                },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );
