@@ -15,7 +15,6 @@ export default function AdminCoursesPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [emoji, setEmoji] = useState("🎓");
-  const [price, setPrice] = useState(3500);
 
   const fetchCourses = async () => {
     setLoading(true);
@@ -33,7 +32,6 @@ export default function AdminCoursesPage() {
     setTitle("");
     setDescription("");
     setEmoji("🎓");
-    setPrice(3500);
     setShowModal(true);
   };
 
@@ -42,7 +40,6 @@ export default function AdminCoursesPage() {
     setTitle(course.title);
     setDescription(course.description || "");
     setEmoji(course.emoji || "🎓");
-    setPrice(course.price || 3500);
     setShowModal(true);
   };
 
@@ -57,14 +54,12 @@ export default function AdminCoursesPage() {
           title,
           description,
           emoji,
-          price: Number(price),
         });
       } else {
         await createCourse({
           title,
           description,
           emoji,
-          price: Number(price),
           order: courses.length,
           published: true,
         });
@@ -162,11 +157,8 @@ export default function AdminCoursesPage() {
                 </p>
 
                 <div className="mt-4 flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-bold text-emerald-400 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
-                    Valor: ${(course.price || 3500).toLocaleString("es-MX")} MXN
-                  </span>
-                  <span className="text-[10px] font-semibold text-blue-400 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">
-                    Incluido en Acceso Total
+                  <span className="text-[11px] font-semibold text-emerald-400 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
+                    Acceso Total Incluido
                   </span>
                 </div>
               </div>
@@ -238,21 +230,6 @@ export default function AdminCoursesPage() {
                   placeholder="Breve resumen del contenido y objetivo del curso..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Precio o Valor de Referencia (MXN)
-                  <span className="ml-2 text-[10px] font-normal text-slate-400">
-                    (Informativo: tus alumnos tienen Acceso Total a todos los cursos)
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) => setPrice(Number(e.target.value))}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500"
                 />
               </div>
