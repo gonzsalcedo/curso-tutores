@@ -1152,6 +1152,23 @@
       }
 
       try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'begin_checkout', {
+            currency: COURSE_CURRENCY,
+            value: COURSE_PRICE,
+            items: [{
+              item_id: 'curso-tutores',
+              item_name: 'Programa Digital Escalable',
+              price: COURSE_PRICE,
+              quantity: 1
+            }]
+          });
+        }
+      } catch (err) {
+        console.error('GA4 begin_checkout error:', err);
+      }
+
+      try {
         const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -94,7 +94,7 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/cursos/login?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/cursos/login?checkout=success&session_id={CHECKOUT_SESSION_ID}&val=${chargeAmountNumber}&cur=${currency.toUpperCase()}`,
       cancel_url: `${origin}/#oferta`,
       metadata: {
         courseId,

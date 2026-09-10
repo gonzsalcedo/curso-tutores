@@ -21,6 +21,61 @@ export default function StudentLoginPage() {
       const params = new URLSearchParams(window.location.search);
       if (params.get("checkout") === "success") {
         setIsCheckoutSuccess(true);
+
+        const sessionId = params.get("session_id");
+        // Si hay sessionId y no se ha registrado previamente en esta sesión, disparar tracking de compra
+        if (sessionId && typeof window.sessionStorage !== "undefined") {
+          const deduplicationKey = `purchase_tracked_${sessionId}`;
+          if (!sessionStorage.getItem(deduplicationKey)) {
+            sessionStorage.setItem(deduplicationKey, "true");
+
+            const rawVal = params.get("val");
+            const purchaseValue = rawVal ? parseFloat(rawVal) : 3500;
+            const purchaseCurrency = (params.get("cur") || "MXN").toUpperCase();
+
+            // 1. Meta Pixel (Navegador) con eventID idéntico al de CAPI para deduplicación perfecta de Meta
+            try {
+              if (typeof (window as any).fbq === "function") {
+                (window as any).fbq(
+                  "track",
+                  "Purchase",
+                  {
+                    content_name: "Curso Digital Escalable",
+                    content_category: "Educacion Digital",
+                    content_type: "product",
+                    value: purchaseValue,
+                    currency: purchaseCurrency,
+                  },
+                  { eventID: sessionId }
+                );
+              }
+            } catch (err) {
+              console.error("Pixel Purchase error:", err);
+            }
+
+            // 2. Google Analytics 4 (GA4) evento estándar de ecommerce: purchase
+            try {
+              if (typeof (window as any).gtag === "function") {
+                (window as any).gtag("event", "purchase", {
+                  transaction_id: sessionId,
+                  value: purchaseValue,
+                  currency: purchaseCurrency,
+                  items: [
+                    {
+                      item_id: "curso-tutores",
+                      item_name: "Curso Digital Escalable",
+                      item_category: "Educacion Digital",
+                      price: purchaseValue,
+                      quantity: 1,
+                    },
+                  ],
+                });
+              }
+            } catch (err) {
+              console.error("GA4 Purchase error:", err);
+            }
+          }
+        }
       }
     }
   }, []);

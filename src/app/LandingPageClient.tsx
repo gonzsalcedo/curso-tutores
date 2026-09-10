@@ -207,6 +207,26 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
 
       try {
+        if (typeof (window as any).gtag === "function") {
+          (window as any).gtag("event", "begin_checkout", {
+            currency: config.code.toUpperCase(),
+            value: chargeValue,
+            items: [
+              {
+                item_id: "curso-tutores",
+                item_name: isSplitUSD ? "Curso Digital Escalable (Plan 3 Pagos)" : "Curso Digital Escalable",
+                item_category: "Educacion Digital",
+                price: chargeValue,
+                quantity: 1,
+              },
+            ],
+          });
+        }
+      } catch (err) {
+        console.error("GA4 begin_checkout error:", err);
+      }
+
+      try {
         const res = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
