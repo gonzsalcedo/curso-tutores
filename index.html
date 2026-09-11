@@ -1137,6 +1137,22 @@
       const originalText = btn ? btn.innerHTML : '';
       if (btn) btn.innerHTML = '<span>Preparando inscripción segura...</span>';
 
+      const eventId = 'ic_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
+      const getCookie = function(name) {
+        var match = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : '';
+      };
+      var fbp = getCookie('_fbp');
+      var fbc = getCookie('_fbc');
+      if (!fbc && typeof window !== 'undefined') {
+        var urlParams = new URLSearchParams(window.location.search);
+        var fbclid = urlParams.get('fbclid');
+        if (fbclid) {
+          fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+        }
+      }
+
       try {
         if (typeof fbq === 'function') {
           fbq('track', 'InitiateCheckout', {
@@ -1145,7 +1161,7 @@
             value: COURSE_PRICE,
             currency: COURSE_CURRENCY,
             button_location: source
-          });
+          }, { eventID: eventId });
         }
       } catch (err) {
         console.error('Meta Pixel error:', err);
@@ -1176,7 +1192,10 @@
             courseId: 'curso-tutores',
             courseTitle: 'Programa Digital Escalable',
             price: COURSE_PRICE,
-            currency: COURSE_CURRENCY
+            currency: COURSE_CURRENCY,
+            eventId: eventId,
+            fbp: fbp,
+            fbc: fbc
           })
         });
 

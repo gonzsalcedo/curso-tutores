@@ -44,6 +44,20 @@ export async function POST(req: Request) {
       ? (currencyConfig.splitPrice || 130)
       : currencyConfig.price;
 
+    // Extraer identificadores y cookies para atribución CAPI
+    let fbp = typeof body.fbp === "string" && body.fbp ? body.fbp : undefined;
+    let fbc = typeof body.fbc === "string" && body.fbc ? body.fbc : undefined;
+
+    const cookieHeader = req.headers.get("cookie") || "";
+    if (!fbp) {
+      const matchFbp = cookieHeader.match(/(?:^|;\s*)_fbp=([^;]+)/);
+      if (matchFbp) fbp = decodeURIComponent(matchFbp[1]);
+    }
+    if (!fbc) {
+      const matchFbc = cookieHeader.match(/(?:^|;\s*)_fbc=([^;]+)/);
+      if (matchFbc) fbc = decodeURIComponent(matchFbc[1]);
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: isSplitUSD ? "subscription" : "payment",
       payment_method_types: ["card"],
@@ -54,6 +68,8 @@ export async function POST(req: Request) {
                 courseId,
                 courseTitle,
                 plan: "split_3",
+                ...(fbp ? { fbp } : {}),
+                ...(fbc ? { fbc } : {}),
               },
             },
           }
@@ -101,18 +117,23 @@ export async function POST(req: Request) {
         courseTitle,
         currency,
         plan: isSplitUSD ? "split_3" : "single",
+        ...(fbp ? { fbp } : {}),
+        ...(fbc ? { fbc } : {}),
       },
     });
 
-    // Reportar InitiateCheckout en backend para máxima cobertura de atribución
+    // Reportar InitiateCheckout en backend para máxima cobertura de atribución y deduplicación
+    const eventId = typeof body.eventId === "string" && body.eventId ? body.eventId : session.id;
     const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined;
     const userAgent = req.headers.get("user-agent") || undefined;
 
     sendMetaConversionEvent({
       eventName: "InitiateCheckout",
-      eventId: session.id,
+      eventId,
       clientIp,
       userAgent,
+      fbp,
+      fbc,
       value: chargeAmountNumber,
       currency: currency.toUpperCase(),
       courseTitle,

@@ -192,15 +192,40 @@ export default function LandingPageClient({ htmlContent }: Props) {
       const isSplitUSD = config.code === "usd" && currentUsdPlan === "split_3";
       const chargeValue = isSplitUSD ? (config.splitPrice || 130) : config.price;
 
+      // Clave compartida de deduplicación para Meta Pixel (browser) y Conversions API (server)
+      const eventId = `ic_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+
+      // Extraer parámetros fbp (Browser ID) y fbc (Click ID) para máxima atribución
+      const getCookie = (name: string) => {
+        if (typeof document === "undefined") return "";
+        const match = document.cookie.match(new RegExp("(?:^|;\\s*)" + name + "=([^;]*)"));
+        return match ? decodeURIComponent(match[1]) : "";
+      };
+
+      const fbp = getCookie("_fbp");
+      let fbc = getCookie("_fbc");
+      if (!fbc && typeof window !== "undefined") {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fbclid = urlParams.get("fbclid");
+        if (fbclid) {
+          fbc = `fb.1.${Date.now()}.${fbclid}`;
+        }
+      }
+
       try {
         if (typeof (window as any).fbq === "function") {
-          (window as any).fbq("track", "InitiateCheckout", {
-            content_name: "Programa Digital Escalable",
-            content_category: "Educacion Digital",
-            value: chargeValue,
-            currency: config.code.toUpperCase(),
-            button_location: source || "pricing_box_main",
-          });
+          (window as any).fbq(
+            "track",
+            "InitiateCheckout",
+            {
+              content_name: "Programa Digital Escalable",
+              content_category: "Educacion Digital",
+              value: chargeValue,
+              currency: config.code.toUpperCase(),
+              button_location: source || "pricing_box_main",
+            },
+            { eventID: eventId }
+          );
         }
       } catch (err) {
         console.error("Pixel tracking error:", err);
@@ -237,6 +262,9 @@ export default function LandingPageClient({ htmlContent }: Props) {
               : "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad",
             currency: config.code,
             plan: isSplitUSD ? "split_3" : "single",
+            eventId,
+            fbp,
+            fbc,
           }),
         });
 

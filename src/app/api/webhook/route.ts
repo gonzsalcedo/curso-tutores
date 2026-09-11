@@ -96,6 +96,8 @@ export async function POST(req: Request) {
       const rawAmount = session.amount_total || 0;
       const amountTotal = rawAmount > 0 ? (isZeroDecimal ? rawAmount : rawAmount / 100) : 3500;
       const phone = session.customer_details?.phone || undefined;
+      const fbp = session.metadata?.fbp || undefined;
+      const fbc = session.metadata?.fbc || undefined;
 
       await sendMetaConversionEvent({
         eventName: "Purchase",
@@ -103,6 +105,8 @@ export async function POST(req: Request) {
         email,
         name,
         phone,
+        fbp,
+        fbc,
         value: amountTotal,
         currency,
         courseTitle: session.metadata?.courseTitle || "Curso Digital Escalable",

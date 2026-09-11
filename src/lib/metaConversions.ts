@@ -17,6 +17,8 @@ interface SendEventParams {
   name?: string;
   clientIp?: string;
   userAgent?: string;
+  fbp?: string;
+  fbc?: string;
   value?: number;
   currency?: string;
   courseTitle?: string;
@@ -31,6 +33,8 @@ export async function sendMetaConversionEvent({
   name,
   clientIp,
   userAgent,
+  fbp,
+  fbc,
   value,
   currency = "MXN",
   courseTitle = "Curso Digital Escalable",
@@ -55,6 +59,12 @@ export async function sendMetaConversionEvent({
     }
     if (userAgent) {
       userData.client_user_agent = userAgent;
+    }
+    if (fbp) {
+      userData.fbp = fbp;
+    }
+    if (fbc) {
+      userData.fbc = fbc;
     }
 
     const customData: Record<string, any> = {
