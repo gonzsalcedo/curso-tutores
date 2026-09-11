@@ -335,6 +335,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: string;
         title: string;
         desc: string;
+        teachIcon: string;
         teach: string;
         format: string;
         result: string;
@@ -347,6 +348,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: "Oficio Culinario",
         title: "Chefs, Reposteros y Maestros de Cocina",
         desc: "En lugar de desgastarte en una cocina caliente o dar talleres presenciales limitados a 6 alumnos por fecha, graba tus recetas y técnicas maestras una sola vez.",
+        teachIcon: "🍳",
         teach: "Repostería comercial, panadería artesanal, masa madre, coctelería o cocina internacional.",
         format: "Videotutoriales paso a paso + recetario en PDF con medidas exactas + grupo para dudas.",
         result: "De cobrar por hora ➔ A vender tu curso a cientos de alumnos en línea",
@@ -358,6 +360,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: "Saber Hacer Práctico",
         title: "Carpinteros, Ebanistas, Mecánicos y Técnicos",
         desc: "La gente busca aprender habilidades manuales reales para ahorrar dinero o emprender. Tu experiencia práctica con las herramientas vale oro.",
+        teachIcon: "🪵",
         teach: "Muebles de melamina desde cero, acabados en madera, mecánica preventiva o instalaciones.",
         format: "Demostraciones grabadas en tu taller + listas de despiece y materiales + checklist de compras.",
         result: "De depender solo de pedidos físicos ➔ A generar un ingreso mensual predecible enseñando tu oficio",
@@ -369,6 +372,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: "Formación & Mentoría",
         title: "Profesores de Idiomas, Matemáticas y Ciencias",
         desc: "Rompe el techo de ingresos de dar clases particulares 1 a 1 donde cambias horas por dinero y tus ingresos caen si te enfermas o tomas vacaciones.",
+        teachIcon: "📚",
         teach: "Inglés conversacional para profesionistas, preparación para admisiones o matemáticas sin miedo.",
         format: "Módulos explicativos pre-grabados + ejercicios descargables + una sesión grupal semanal de dudas.",
         result: "De dar 30 horas semanales de clase ➔ A dedicar solo 3 horas y atender a decenas de alumnos",
@@ -380,6 +384,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: "Servicios de Estética",
         title: "Barberos, Estilistas, Maquillaje y Uñas",
         desc: "Tu cuerpo se cansa de estar de pie 10 horas cortando cabello o aplicando uñas. Multiplica tus ingresos enseñando tu técnica a quienes inician en el rubro.",
+        teachIcon: "💈",
         teach: "Técnicas de fade y barba perfecta, aplicación de uñas acrílicas, automaquillaje o micropigmentación.",
         format: "Primeros planos en video con ángulos clave + guía de marcas recomendadas y herramientas.",
         result: "Cobrar por curso lo equivalente a 15 citas presenciales, sin desgastar tu espalda ni tus manos",
@@ -391,6 +396,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         badge: "Habilidades Creativas",
         title: "Músicos, Fotógrafos, Ilustradores y Creativos",
         desc: "Comparte tu método artístico estructurado para que principiantes aprendan sin frustrarse, desde su casa y a su propio ritmo.",
+        teachIcon: "🎸",
         teach: "Guitarra o piano desde cero, fotografía con celular para marcas, ilustración digital o cerámica.",
         format: "Lecciones audiovisuales prácticas + partituras/plantillas descargables + retos semanales.",
         result: "Un catálogo de cursos que inscribe alumnos 24/7 mientras tú sigues creando tu propio arte",
@@ -400,7 +406,26 @@ export default function LandingPageClient({ htmlContent }: Props) {
       },
     };
 
-    const activateRoleTab = (roleKey: string) => {
+    const roleKeys = ["cocina", "oficios", "academia", "belleza", "musica"];
+    let currentRoleIndex = 0;
+    let autoRotateTimer: NodeJS.Timeout | null = null;
+    let userInteractedWithRoles = false;
+
+    const stopRoleAutoRotate = () => {
+      userInteractedWithRoles = true;
+      if (autoRotateTimer) {
+        clearInterval(autoRotateTimer);
+        autoRotateTimer = null;
+      }
+    };
+
+    const activateRoleTab = (roleKey: string, isManual = false) => {
+      if (isManual) {
+        stopRoleAutoRotate();
+        const foundIdx = roleKeys.indexOf(roleKey);
+        if (foundIdx !== -1) currentRoleIndex = foundIdx;
+      }
+
       const data = ROLE_TABS_DATA[roleKey];
       if (!data) return;
 
@@ -410,6 +435,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
         if (key === roleKey) {
           btn.className =
             "role-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer bg-slate-900 text-white border border-slate-900 shadow-sm";
+          // Asegurar que el botón activo sea visible en el scroll horizontal móvil
+          btn.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
         } else {
           btn.className =
             "role-tab-btn px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer bg-white text-slate-700 border border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-2xs";
@@ -423,6 +450,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         const badgeEl = document.getElementById("role-badge");
         const titleEl = document.getElementById("role-title");
         const descEl = document.getElementById("role-desc");
+        const teachIconEl = document.getElementById("role-teach-icon");
         const teachEl = document.getElementById("role-teach");
         const formatEl = document.getElementById("role-format");
         const resultEl = document.getElementById("role-result");
@@ -432,6 +460,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
         if (badgeEl) badgeEl.textContent = data.badge;
         if (titleEl) titleEl.textContent = data.title;
         if (descEl) descEl.textContent = data.desc;
+        if (teachIconEl) teachIconEl.textContent = data.teachIcon;
         if (teachEl) teachEl.textContent = data.teach;
         if (formatEl) formatEl.textContent = data.format;
         if (resultEl) resultEl.textContent = data.result;
@@ -447,6 +476,13 @@ export default function LandingPageClient({ htmlContent }: Props) {
 
     (window as any).activateRoleTab = activateRoleTab;
 
+    // Iniciar rotación automática cada 4 segundos hasta que el usuario haga clic o interactúe
+    autoRotateTimer = setInterval(() => {
+      if (userInteractedWithRoles) return;
+      currentRoleIndex = (currentRoleIndex + 1) % roleKeys.length;
+      activateRoleTab(roleKeys[currentRoleIndex], false);
+    }, 4000);
+
     // 8. Delegación de eventos para clicks en botones de la landing
     const handleDocumentClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -458,9 +494,14 @@ export default function LandingPageClient({ htmlContent }: Props) {
         e.preventDefault();
         const roleKey = roleTabBtn.getAttribute("data-role-tab");
         if (roleKey) {
-          activateRoleTab(roleKey);
+          activateRoleTab(roleKey, true); // true = interacción manual del usuario, detiene la rotación
         }
         return;
+      }
+
+      // Si el usuario hace clic dentro de la tarjeta de oficios, detener la rotación para no interrumpir su lectura
+      if (target.closest("#role-card-container, #para-quien")) {
+        stopRoleAutoRotate();
       }
 
       // Click en botón play o contenedor del video
@@ -525,6 +566,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
     }
 
     return () => {
+      if (autoRotateTimer) clearInterval(autoRotateTimer);
       document.removeEventListener("click", handleDocumentClick);
       if (observer && hero) {
         observer.unobserve(hero);
