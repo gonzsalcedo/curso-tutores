@@ -21,6 +21,7 @@ yarn-error.log*
 # OS Files
 .DS_Store
 *.pem
+*.tsbuildinfo
 
 # Large video files
 *.mp4

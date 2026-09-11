@@ -12,6 +12,9 @@ export interface CurrencyConfig {
   splitPriceFormatted?: string;
   splitUnitAmount?: number;
   
+  highTicketPricing: string;
+  programPricingRange: string;
+
   // Tabla Comparativa
   table: {
     hourlyRate: string;
@@ -43,6 +46,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "$3,500",
     unitAmount: 350000,
     allowsMSI: true,
+    highTicketPricing: "$2,000 a $6,000 MXN",
+    programPricingRange: "$2,500 - $7,000+ MXN",
     table: {
       hourlyRate: "$400 MXN / hora",
       traditionalMonthly: "~$25,000 - $35,000 MXN",
@@ -73,6 +78,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     splitPrice: 130,
     splitPriceFormatted: "3 pagos de $130",
     splitUnitAmount: 13000,
+    highTicketPricing: "$100 a $300 USD",
+    programPricingRange: "$150 - $400+ USD",
     table: {
       hourlyRate: "$50 - $75 USD / hora",
       traditionalMonthly: "~$3,000 - $4,500 USD",
@@ -99,6 +106,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "$800,000",
     unitAmount: 80000000, // 2 decimals in Stripe (800,000 * 100)
     allowsMSI: false,
+    highTicketPricing: "$400,000 a $1,200,000 COP",
+    programPricingRange: "$500,000 - $1,500,000+ COP",
     table: {
       hourlyRate: "$25,000 - $40,000 COP / hora",
       traditionalMonthly: "~$1,500,000 - $2,500,000 COP",
@@ -125,6 +134,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "$190,000",
     unitAmount: 190000, // Zero decimal currency in Stripe
     allowsMSI: false,
+    highTicketPricing: "$95,000 a $280,000 CLP",
+    programPricingRange: "$120,000 - $350,000+ CLP",
     table: {
       hourlyRate: "$10,000 - $16,000 CLP / hora",
       traditionalMonthly: "~$600,000 - $1,000,000 CLP",
@@ -151,6 +162,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "S/ 750",
     unitAmount: 75000,
     allowsMSI: false,
+    highTicketPricing: "S/ 380 a S/ 1,150 PEN",
+    programPricingRange: "S/ 480 - S/ 1,400+ PEN",
     table: {
       hourlyRate: "S/ 35 - S/ 55 PEN / hora",
       traditionalMonthly: "~S/ 2,200 - S/ 3,500 PEN",
@@ -177,6 +190,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "$8,000",
     unitAmount: 800000,
     allowsMSI: false,
+    highTicketPricing: "$4,000 a $12,000 UYU",
+    programPricingRange: "$5,000 - $15,000+ UYU",
     table: {
       hourlyRate: "$450 - $700 UYU / hora",
       traditionalMonthly: "~$28,000 - $44,000 UYU",
@@ -203,6 +218,8 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
     priceFormatted: "180 €",
     unitAmount: 18000,
     allowsMSI: false,
+    highTicketPricing: "100 € a 300 €",
+    programPricingRange: "150 € - 350+ €",
     table: {
       hourlyRate: "20 € - 35 € / hora",
       traditionalMonthly: "~1,300 € - 2,200 €",

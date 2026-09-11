@@ -34,38 +34,12 @@ export default function LandingPageClient({ htmlContent }: Props) {
       if (flagEl) flagEl.textContent = config.flag;
       if (labelEl) labelEl.textContent = config.label;
 
-      // Tabla Comparativa
-      const hourlyEl = document.querySelector('[data-field="table-hourly-rate"]');
-      if (hourlyEl) hourlyEl.textContent = config.table.hourlyRate;
+      // Precios dinámicos en temario y caja de oferta
+      const highTicketEl = document.querySelector('[data-field="high-ticket-pricing"]');
+      if (highTicketEl) highTicketEl.textContent = config.highTicketPricing;
 
-      const tradMonthlyEl = document.querySelector('[data-field="table-traditional-monthly"]');
-      if (tradMonthlyEl) tradMonthlyEl.textContent = config.table.traditionalMonthly;
-
-      const coursePriceEl = document.querySelector('[data-field="table-course-price"]');
-      if (coursePriceEl) coursePriceEl.textContent = config.table.courseSellingPrice;
-
-      const scalableMonthlyEl = document.querySelector('[data-field="table-scalable-monthly"]');
-      if (scalableMonthlyEl) scalableMonthlyEl.textContent = config.table.scalableMonthly;
-
-      // Bono 1 individual
-      const bonus1IndEl = document.querySelector('[data-field="bonus1-individual-value"]');
-      if (bonus1IndEl) bonus1IndEl.textContent = `Valor: ${config.stack.bonus1Value}`;
-
-      // Stack de Oferta
-      const stackProgEl = document.querySelector('[data-field="stack-program"]');
-      if (stackProgEl) stackProgEl.textContent = config.stack.programValue;
-
-      const stackB1El = document.querySelector('[data-field="stack-bonus1"]');
-      if (stackB1El) stackB1El.textContent = config.stack.bonus1Value;
-
-      const stackB2El = document.querySelector('[data-field="stack-bonus2"]');
-      if (stackB2El) stackB2El.textContent = config.stack.bonus2Value;
-
-      const stackB3El = document.querySelector('[data-field="stack-bonus3"]');
-      if (stackB3El) stackB3El.textContent = config.stack.bonus3Value;
-
-      const stackTotalEl = document.querySelector('[data-field="stack-total"]');
-      if (stackTotalEl) stackTotalEl.textContent = config.stack.totalRealValue;
+      const programRangeEl = document.querySelector('[data-field="program-pricing-range"]');
+      if (programRangeEl) programRangeEl.textContent = config.programPricingRange;
 
       // Precio en caja de oferta
       const priceAmountEl = document.querySelector('[data-field="price-amount"]');
@@ -354,10 +328,140 @@ export default function LandingPageClient({ htmlContent }: Props) {
 
     autoDetectCurrency();
 
+    // 7. Datos y conmutador interactivo para la sección "¿Para quién es este curso?"
+    const ROLE_TABS_DATA: Record<
+      string,
+      {
+        badge: string;
+        title: string;
+        desc: string;
+        teach: string;
+        format: string;
+        result: string;
+        img: string;
+        imgBadge: string;
+        imgAlt: string;
+      }
+    > = {
+      cocina: {
+        badge: "Oficio Culinario",
+        title: "Chefs, Reposteros y Maestros de Cocina",
+        desc: "En lugar de desgastarte en una cocina caliente o dar talleres presenciales limitados a 6 alumnos por fecha, graba tus recetas y técnicas maestras una sola vez.",
+        teach: "Repostería comercial, panadería artesanal, masa madre, coctelería o cocina internacional.",
+        format: "Videotutoriales paso a paso + recetario en PDF con medidas exactas + grupo para dudas.",
+        result: "De cobrar por hora ➔ A vender tu curso a cientos de alumnos en línea",
+        img: "/profesiones/chef.webp",
+        imgBadge: "Gastronomía",
+        imgAlt: "Chef profesional en cocina",
+      },
+      oficios: {
+        badge: "Saber Hacer Práctico",
+        title: "Carpinteros, Ebanistas, Mecánicos y Técnicos",
+        desc: "La gente busca aprender habilidades manuales reales para ahorrar dinero o emprender. Tu experiencia práctica con las herramientas vale oro.",
+        teach: "Muebles de melamina desde cero, acabados en madera, mecánica preventiva o instalaciones.",
+        format: "Demostraciones grabadas en tu taller + listas de despiece y materiales + checklist de compras.",
+        result: "De depender solo de pedidos físicos ➔ A generar un ingreso mensual predecible enseñando tu oficio",
+        img: "/profesiones/carpintero.webp",
+        imgBadge: "Oficios Manuales",
+        imgAlt: "Carpintero artesano en taller",
+      },
+      academia: {
+        badge: "Formación & Mentoría",
+        title: "Profesores de Idiomas, Matemáticas y Ciencias",
+        desc: "Rompe el techo de ingresos de dar clases particulares 1 a 1 donde cambias horas por dinero y tus ingresos caen si te enfermas o tomas vacaciones.",
+        teach: "Inglés conversacional para profesionistas, preparación para admisiones o matemáticas sin miedo.",
+        format: "Módulos explicativos pre-grabados + ejercicios descargables + una sesión grupal semanal de dudas.",
+        result: "De dar 30 horas semanales de clase ➔ A dedicar solo 3 horas y atender a decenas de alumnos",
+        img: "/profesiones/profesor.webp",
+        imgBadge: "Educación & Mentoría",
+        imgAlt: "Profesora y tutora en oficina de estudio",
+      },
+      belleza: {
+        badge: "Servicios de Estética",
+        title: "Barberos, Estilistas, Maquillaje y Uñas",
+        desc: "Tu cuerpo se cansa de estar de pie 10 horas cortando cabello o aplicando uñas. Multiplica tus ingresos enseñando tu técnica a quienes inician en el rubro.",
+        teach: "Técnicas de fade y barba perfecta, aplicación de uñas acrílicas, automaquillaje o micropigmentación.",
+        format: "Primeros planos en video con ángulos clave + guía de marcas recomendadas y herramientas.",
+        result: "Cobrar por curso lo equivalente a 15 citas presenciales, sin desgastar tu espalda ni tus manos",
+        img: "/profesiones/barbero.webp",
+        imgBadge: "Cuidado & Estética",
+        imgAlt: "Barbero profesional en barbería",
+      },
+      musica: {
+        badge: "Habilidades Creativas",
+        title: "Músicos, Fotógrafos, Ilustradores y Creativos",
+        desc: "Comparte tu método artístico estructurado para que principiantes aprendan sin frustrarse, desde su casa y a su propio ritmo.",
+        teach: "Guitarra o piano desde cero, fotografía con celular para marcas, ilustración digital o cerámica.",
+        format: "Lecciones audiovisuales prácticas + partituras/plantillas descargables + retos semanales.",
+        result: "Un catálogo de cursos que inscribe alumnos 24/7 mientras tú sigues creando tu propio arte",
+        img: "/profesiones/musico.webp",
+        imgBadge: "Artes & Creatividad",
+        imgAlt: "Músico e instructora con guitarra acústica",
+      },
+    };
+
+    const activateRoleTab = (roleKey: string) => {
+      const data = ROLE_TABS_DATA[roleKey];
+      if (!data) return;
+
+      const tabBtns = document.querySelectorAll<HTMLElement>("[data-role-tab]");
+      tabBtns.forEach((btn) => {
+        const key = btn.getAttribute("data-role-tab");
+        if (key === roleKey) {
+          btn.className =
+            "role-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer bg-slate-900 text-white border border-slate-900 shadow-sm";
+        } else {
+          btn.className =
+            "role-tab-btn px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer bg-white text-slate-700 border border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-2xs";
+        }
+      });
+
+      const cardContainer = document.getElementById("role-card-container");
+      if (cardContainer) cardContainer.style.opacity = "0.35";
+
+      setTimeout(() => {
+        const badgeEl = document.getElementById("role-badge");
+        const titleEl = document.getElementById("role-title");
+        const descEl = document.getElementById("role-desc");
+        const teachEl = document.getElementById("role-teach");
+        const formatEl = document.getElementById("role-format");
+        const resultEl = document.getElementById("role-result");
+        const imgEl = document.getElementById("role-img") as HTMLImageElement | null;
+        const imgBadgeEl = document.getElementById("role-img-badge");
+
+        if (badgeEl) badgeEl.textContent = data.badge;
+        if (titleEl) titleEl.textContent = data.title;
+        if (descEl) descEl.textContent = data.desc;
+        if (teachEl) teachEl.textContent = data.teach;
+        if (formatEl) formatEl.textContent = data.format;
+        if (resultEl) resultEl.textContent = data.result;
+        if (imgBadgeEl) imgBadgeEl.textContent = data.imgBadge;
+        if (imgEl) {
+          imgEl.src = data.img;
+          imgEl.alt = data.imgAlt;
+        }
+
+        if (cardContainer) cardContainer.style.opacity = "1";
+      }, 100);
+    };
+
+    (window as any).activateRoleTab = activateRoleTab;
+
     // 8. Delegación de eventos para clicks en botones de la landing
     const handleDocumentClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target) return;
+
+      // Click en mini-pestaña de oficios / profesiones
+      const roleTabBtn = target.closest<HTMLElement>("[data-role-tab]");
+      if (roleTabBtn) {
+        e.preventDefault();
+        const roleKey = roleTabBtn.getAttribute("data-role-tab");
+        if (roleKey) {
+          activateRoleTab(roleKey);
+        }
+        return;
+      }
 
       // Click en botón play o contenedor del video
       const vslTrigger = target.closest("#vsl-cover, [onclick*='startVideoDemo']");
