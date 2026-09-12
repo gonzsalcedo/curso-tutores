@@ -34,13 +34,6 @@ export default function LandingPageClient({ htmlContent }: Props) {
       if (flagEl) flagEl.textContent = config.flag;
       if (labelEl) labelEl.textContent = config.label;
 
-      // Precios dinámicos en temario y caja de oferta
-      const highTicketEl = document.querySelector('[data-field="high-ticket-pricing"]');
-      if (highTicketEl) highTicketEl.textContent = config.highTicketPricing;
-
-      const programRangeEl = document.querySelector('[data-field="program-pricing-range"]');
-      if (programRangeEl) programRangeEl.textContent = config.programPricingRange;
-
       // Precio en caja de oferta
       const priceAmountEl = document.querySelector('[data-field="price-amount"]');
       const priceCurrEl = document.querySelector('[data-field="price-currency"]');
