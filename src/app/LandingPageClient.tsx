@@ -410,6 +410,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
     let currentRoleIndex = 0;
     let autoRotateTimer: NodeJS.Timeout | null = null;
     let userInteractedWithRoles = false;
+    let isRoleSectionVisible = false;
 
     const stopRoleAutoRotate = () => {
       userInteractedWithRoles = true;
@@ -435,8 +436,12 @@ export default function LandingPageClient({ htmlContent }: Props) {
         if (key === roleKey) {
           btn.className =
             "role-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer bg-slate-900 text-white border border-slate-900 shadow-sm";
-          // Asegurar que el botón activo sea visible en el scroll horizontal móvil
-          btn.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+          // Si el usuario hace clic manual, centrar la pestaña solo dentro del contenedor horizontal móvil (sin mover la ventana)
+          if (isManual && btn.parentElement) {
+            const container = btn.parentElement;
+            const scrollLeft = btn.offsetLeft - container.offsetWidth / 2 + btn.offsetWidth / 2;
+            container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+          }
         } else {
           btn.className =
             "role-tab-btn px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap cursor-pointer bg-white text-slate-700 border border-slate-200 hover:border-slate-300 hover:text-slate-900 shadow-2xs";
@@ -476,12 +481,38 @@ export default function LandingPageClient({ htmlContent }: Props) {
 
     (window as any).activateRoleTab = activateRoleTab;
 
-    // Iniciar rotación automática cada 4 segundos hasta que el usuario haga clic o interactúe
+    // Solo rotar si el usuario no ha interactuado Y la sección está visible en pantalla
     autoRotateTimer = setInterval(() => {
-      if (userInteractedWithRoles) return;
+      if (userInteractedWithRoles || !isRoleSectionVisible) return;
       currentRoleIndex = (currentRoleIndex + 1) % roleKeys.length;
       activateRoleTab(roleKeys[currentRoleIndex], false);
-    }, 4000);
+    }, 4500);
+
+    // Observer para pausar la rotación si la sección #para-quien no está en pantalla
+    const paraQuienSection = document.getElementById("para-quien");
+    let roleObserver: IntersectionObserver | null = null;
+    if (paraQuienSection && "IntersectionObserver" in window) {
+      roleObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isRoleSectionVisible = entry.isIntersecting;
+          });
+        },
+        { threshold: 0.15 }
+      );
+      roleObserver.observe(paraQuienSection);
+    } else {
+      isRoleSectionVisible = true;
+    }
+
+    const handleRoleInteraction = () => {
+      stopRoleAutoRotate();
+    };
+
+    if (paraQuienSection) {
+      paraQuienSection.addEventListener("mouseenter", handleRoleInteraction, { passive: true });
+      paraQuienSection.addEventListener("touchstart", handleRoleInteraction, { passive: true });
+    }
 
     // 8. Delegación de eventos para clicks en botones de la landing
     const handleDocumentClick = (e: MouseEvent) => {
@@ -570,6 +601,13 @@ export default function LandingPageClient({ htmlContent }: Props) {
       document.removeEventListener("click", handleDocumentClick);
       if (observer && hero) {
         observer.unobserve(hero);
+      }
+      if (roleObserver && paraQuienSection) {
+        roleObserver.unobserve(paraQuienSection);
+      }
+      if (paraQuienSection) {
+        paraQuienSection.removeEventListener("mouseenter", handleRoleInteraction);
+        paraQuienSection.removeEventListener("touchstart", handleRoleInteraction);
       }
       const container = document.getElementById("chatac-widget-container");
       if (container) container.remove();
