@@ -135,7 +135,7 @@ fbq('track', 'PageView');`}
                   },
                   "offers": {
                     "@type": "Offer",
-                    "price": "3500",
+                    "price": "997",
                     "priceCurrency": "MXN",
                     "availability": "https://schema.org/InStock",
                     "url": "https://tutor.gonzsalcedo.com",

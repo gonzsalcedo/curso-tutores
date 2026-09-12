@@ -45,8 +45,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
       const priceAmountEl = document.querySelector('[data-field="price-amount"]');
       const priceCurrEl = document.querySelector('[data-field="price-currency"]');
       if (priceAmountEl) {
-        if (config.code === "usd" && usdPlan === "split_3") {
-          priceAmountEl.textContent = "3x $130";
+        if (config.code === "usd" && usdPlan === "split_3" && config.hasSplitOption) {
+          priceAmountEl.textContent = config.splitPriceFormatted || "3x $35";
         } else {
           priceAmountEl.textContent = config.stack.officialPriceDisplay;
         }
@@ -68,10 +68,10 @@ export default function LandingPageClient({ htmlContent }: Props) {
         }
       }
 
-      // Selector de planes USD (mostrar solo en USD)
+      // Selector de planes USD (mostrar solo si la divisa tiene opción diferida activa)
       const usdOptionsEl = document.getElementById("usd-payment-options");
       if (usdOptionsEl) {
-        if (config.code === "usd") {
+        if (config.code === "usd" && config.hasSplitOption) {
           usdOptionsEl.classList.remove("hidden");
         } else {
           usdOptionsEl.classList.add("hidden");
@@ -99,8 +99,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
       const stickyPriceEl = document.querySelector('[data-field="sticky-price"]');
       const stickyNoteEl = document.querySelector('[data-field="sticky-note"]');
       if (stickyPriceEl) {
-        if (config.code === "usd" && usdPlan === "split_3") {
-          stickyPriceEl.textContent = "3x $130 USD";
+        if (config.code === "usd" && usdPlan === "split_3" && config.hasSplitOption) {
+          stickyPriceEl.textContent = "3x $35 USD";
         } else {
           stickyPriceEl.textContent = `${config.stack.officialPriceDisplay} ${config.stack.currencySuffix}`;
         }
@@ -108,8 +108,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
       if (stickyNoteEl) {
         if (config.allowsMSI) {
           stickyNoteEl.textContent = "Hasta MSI con tarjetas participantes";
-        } else if (config.code === "usd" && usdPlan === "split_3") {
-          stickyNoteEl.textContent = "3 pagos diferidos de $130 USD";
+        } else if (config.code === "usd" && usdPlan === "split_3" && config.hasSplitOption) {
+          stickyNoteEl.textContent = "3 pagos diferidos de $35 USD";
         } else {
           stickyNoteEl.textContent = "Acceso completo e ilimitado";
         }
@@ -118,8 +118,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
       // Actualizar texto del botón principal CTA
       const ctaText = document.getElementById("checkout-cta-text");
       if (ctaText) {
-        if (config.code === "usd" && usdPlan === "split_3") {
-          ctaText.textContent = "¡INSCRIBIRME EN 3 PAGOS DE $130 USD!";
+        if (config.code === "usd" && usdPlan === "split_3" && config.hasSplitOption) {
+          ctaText.textContent = `¡INSCRIBIRME EN 3 PAGOS DE $35 USD!`;
         } else {
           ctaText.textContent = "¡QUIERO INSCRIBIRME HOY!";
         }
@@ -163,8 +163,8 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
 
       const config: CurrencyConfig = CURRENCIES[currentCurrencyCode] || CURRENCIES.mxn;
-      const isSplitUSD = config.code === "usd" && currentUsdPlan === "split_3";
-      const chargeValue = isSplitUSD ? (config.splitPrice || 130) : config.price;
+      const isSplitUSD = config.code === "usd" && currentUsdPlan === "split_3" && !!config.hasSplitOption;
+      const chargeValue = isSplitUSD ? (config.splitPrice || 35) : config.price;
 
       // Clave compartida de deduplicación para Meta Pixel (browser) y Conversions API (server)
       const eventId = `ic_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;

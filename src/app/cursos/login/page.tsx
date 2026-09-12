@@ -30,7 +30,7 @@ export default function StudentLoginPage() {
             sessionStorage.setItem(deduplicationKey, "true");
 
             const rawVal = params.get("val");
-            const purchaseValue = rawVal ? parseFloat(rawVal) : 3500;
+            const purchaseValue = rawVal ? parseFloat(rawVal) : 997;
             const purchaseCurrency = (params.get("cur") || "MXN").toUpperCase();
 
             // 1. Meta Pixel (Navegador) con eventID idéntico al de CAPI para deduplicación perfecta de Meta

@@ -94,7 +94,7 @@ export async function POST(req: Request) {
       const currency = session.currency ? session.currency.toUpperCase() : "MXN";
       const isZeroDecimal = currency.toLowerCase() === "clp";
       const rawAmount = session.amount_total || 0;
-      const amountTotal = rawAmount > 0 ? (isZeroDecimal ? rawAmount : rawAmount / 100) : 3500;
+      const amountTotal = rawAmount > 0 ? (isZeroDecimal ? rawAmount : rawAmount / 100) : 997;
       const phone = session.customer_details?.phone || undefined;
       const fbp = session.metadata?.fbp || undefined;
       const fbc = session.metadata?.fbc || undefined;
