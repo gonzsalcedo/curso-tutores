@@ -164,3 +164,236 @@ export async function sendAdminNewStudentEmail({
     console.error("Error en sendAdminNewStudentEmail:", error);
   }
 }
+
+interface OxxoPendingParams {
+  studentEmail: string;
+  studentName: string;
+  amount: string;
+  voucherUrl?: string | null;
+  voucherNumber?: string | null;
+  expiresAt?: number | null;
+  courseTitle?: string;
+}
+
+/**
+ * Envía correo al alumno cuando genera su boleta de pago OXXO en Stripe
+ */
+export async function sendOxxoPendingEmail({
+  studentEmail,
+  studentName,
+  amount,
+  voucherUrl,
+  voucherNumber,
+  expiresAt,
+  courseTitle = "Programa Digital Escalable",
+}: OxxoPendingParams) {
+  try {
+    const formattedExpires = expiresAt
+      ? new Date(expiresAt * 1000).toLocaleDateString("es-MX", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          timeZone: "America/Mexico_City",
+        })
+      : "en los próximos 3 días";
+
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Gonzalo Salcedo <bienvenida@alepianostudio.com>",
+        to: studentEmail,
+        subject: `📄 Ficha de Pago OXXO: ${courseTitle}`,
+        html: `
+          <div style="background-color:#0B0F19;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding:50px 20px;text-align:center;">
+            <div style="max-width:540px;margin:0 auto;background-color:#111827;border:1px solid #1F2937;border-radius:16px;padding:40px 32px;text-align:left;box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+              
+              <div style="text-align:center;margin-bottom:28px;">
+                <div style="font-size:44px;margin-bottom:12px;">🏪</div>
+                <h1 style="font-size:22px;color:#ffffff;margin:0;font-weight:700;letter-spacing:-0.5px;">Tu Ficha de Pago en OXXO</h1>
+                <p style="font-size:13px;color:#F59E0B;font-weight:600;margin-top:6px;">Pendiente de Pago en Tienda</p>
+              </div>
+
+              <p style="font-size:15px;color:#CBD5E1;line-height:1.6;margin:0 0 16px 0;">
+                Hola <strong>${studentName || "Educador/a"}</strong>,
+              </p>
+              <p style="font-size:15px;color:#94A3B8;line-height:1.6;margin:0 0 24px 0;">
+                Has generado tu ficha para pagar en efectivo en cualquier tienda <strong>OXXO</strong> de México tu inscripción a <strong>${courseTitle}</strong>.
+              </p>
+
+              <!-- Tarjeta de Detalles del Ticket -->
+              <div style="background-color:#0B0F19;border:1px solid #374151;border-radius:12px;padding:20px;margin-bottom:24px;">
+                <table style="width:100%;font-size:14px;border-collapse:collapse;">
+                  <tr>
+                    <td style="color:#94A3B8;padding:8px 0;border-bottom:1px solid #1F2937;">Monto a pagar:</td>
+                    <td style="color:#10B981;font-weight:700;padding:8px 0;border-bottom:1px solid #1F2937;text-align:right;font-size:16px;">${amount}</td>
+                  </tr>
+                  ${
+                    voucherNumber
+                      ? `<tr>
+                    <td style="color:#94A3B8;padding:8px 0;border-bottom:1px solid #1F2937;">Referencia OXXO:</td>
+                    <td style="color:#38BDF8;font-family:monospace;font-weight:700;padding:8px 0;border-bottom:1px solid #1F2937;text-align:right;font-size:15px;">${voucherNumber}</td>
+                  </tr>`
+                      : ""
+                  }
+                  <tr>
+                    <td style="color:#94A3B8;padding:8px 0;">Pagar antes de:</td>
+                    <td style="color:#F59E0B;font-weight:600;padding:8px 0;text-align:right;">${formattedExpires}</td>
+                  </tr>
+                </table>
+              </div>
+
+              ${
+                voucherUrl
+                  ? `
+              <div style="text-align:center;margin-bottom:24px;">
+                <a href="${voucherUrl}" target="_blank" style="display:inline-block;background-color:#F59E0B;color:#0B0F19;font-size:15px;font-weight:800;text-decoration:none;padding:16px 36px;border-radius:12px;box-shadow:0 4px 14px rgba(245,158,11,0.3);">
+                  Ver Código de Barras Oficial →
+                </a>
+              </div>
+              `
+                  : ""
+              }
+
+              <!-- Pasos para pagar -->
+              <div style="background-color:#1E293B;border-left:4px solid #F59E0B;padding:16px;border-radius:8px;margin-bottom:24px;">
+                <h4 style="color:#FFFFFF;margin:0 0 10px 0;font-size:14px;font-weight:700;">Pasos para completar tu pago:</h4>
+                <ol style="color:#94A3B8;font-size:13px;line-height:1.6;margin:0;padding-left:18px;">
+                  <li style="margin-bottom:6px;">Lleva tu código de barras en tu celular (o dicta la referencia) al cajero del OXXO.</li>
+                  <li style="margin-bottom:6px;">Menciona que realizarás un pago de servicio <strong>OXXO Pay</strong>.</li>
+                  <li>Conserva tu comprobante de caja impreso.</li>
+                </ol>
+              </div>
+
+              <div style="background-color:#0B0F19/80;border:1px dashed #374151;border-radius:8px;padding:14px;margin-bottom:20px;text-align:center;">
+                <p style="font-size:12px;color:#A7F3D0;margin:0;line-height:1.5;">
+                  ⚡ <strong>Activación Automática:</strong> En cuanto la cajera registre tu pago en caja, nuestro sistema activará tu cuenta de inmediato y te llegará tu correo oficial de bienvenida con tus accesos de por vida.
+                </p>
+              </div>
+
+            </div>
+
+            <div style="max-width:540px;margin:28px auto 0;text-align:center;">
+              <p style="font-size:12px;color:#64748B;line-height:1.5;margin:0;">
+                ¿Dudas con tu boleta de OXXO? Responde a este correo o escríbenos por el chat de la página.
+              </p>
+              <p style="font-size:11px;color:#475569;margin-top:14px;">
+                &copy; ${new Date().getFullYear()} Gonzalo Salcedo • Programa Digital Escalable
+              </p>
+            </div>
+          </div>
+        `,
+      }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      console.log(`✅ Ficha OXXO enviada a ${studentEmail}:`, data.id);
+    } else {
+      console.error(`❌ Error enviando ficha OXXO a ${studentEmail}:`, data);
+    }
+    return data;
+  } catch (error) {
+    console.error("Error en sendOxxoPendingEmail:", error);
+  }
+}
+
+interface AdminOxxoPendingParams {
+  studentEmail: string;
+  studentName: string;
+  amount: string;
+  voucherUrl?: string | null;
+  voucherNumber?: string | null;
+  courseTitle?: string;
+}
+
+/**
+ * Notifica al administrador que un usuario generó una boleta de OXXO (aún no pagada)
+ */
+export async function sendAdminOxxoPendingEmail({
+  studentEmail,
+  studentName,
+  amount,
+  voucherUrl,
+  voucherNumber,
+  courseTitle = "Programa Digital Escalable",
+}: AdminOxxoPendingParams) {
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Notificaciones Tutor <notificaciones@alepianostudio.com>",
+        to: ADMIN_EMAIL,
+        subject: `⏳ Intención de pago OXXO: ${studentName || studentEmail} (${amount})`,
+        html: `
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:520px;margin:0 auto;background:#111827;border-radius:16px;padding:32px;color:#e2e8f0;border:1px solid #1f2937;">
+            <div style="text-align:center;margin-bottom:20px;">
+              <span style="font-size:40px;">⏳</span>
+              <h2 style="color:#f59e0b;margin:10px 0 0 0;font-size:20px;">Intención de Pago OXXO Registrada</h2>
+              <p style="color:#94a3b8;font-size:13px;margin:4px 0 0 0;">${courseTitle}</p>
+            </div>
+
+            <div style="background:#0b0f19;border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid #1f2937;">
+              <table style="width:100%;font-size:14px;border-collapse:collapse;">
+                <tr>
+                  <td style="color:#94a3b8;padding:8px 0;border-bottom:1px solid #1f2937;">Interesado:</td>
+                  <td style="color:#ffffff;font-weight:600;padding:8px 0;border-bottom:1px solid #1f2937;text-align:right;">${studentName || "No especificado"}</td>
+                </tr>
+                <tr>
+                  <td style="color:#94a3b8;padding:8px 0;border-bottom:1px solid #1f2937;">Correo:</td>
+                  <td style="color:#38bdf8;padding:8px 0;border-bottom:1px solid #1f2937;text-align:right;">${studentEmail}</td>
+                </tr>
+                <tr>
+                  <td style="color:#94a3b8;padding:8px 0;border-bottom:1px solid #1f2937;">Monto esperado:</td>
+                  <td style="color:#f59e0b;font-weight:700;padding:8px 0;border-bottom:1px solid #1f2937;text-align:right;">${amount}</td>
+                </tr>
+                ${
+                  voucherNumber
+                    ? `<tr>
+                  <td style="color:#94a3b8;padding:8px 0;border-bottom:1px solid #1f2937;">Referencia:</td>
+                  <td style="color:#cbd5e1;padding:8px 0;text-align:right;font-family:monospace;">${voucherNumber}</td>
+                </tr>`
+                    : ""
+                }
+                <tr>
+                  <td style="color:#94a3b8;padding:8px 0;">Estado:</td>
+                  <td style="color:#f59e0b;font-weight:600;padding:8px 0;text-align:right;">Pendiente de pago en caja</td>
+                </tr>
+              </table>
+            </div>
+
+            <p style="font-size:12px;color:#94a3b8;line-height:1.5;margin-bottom:20px;">
+              ⚠️ <em>Nota de seguridad:</em> <strong>No se ha creado acceso al curso</strong> para este alumno. El sistema esperará la confirmación bancaria de OXXO antes de otorgar el acceso.
+            </p>
+
+            ${
+              voucherUrl
+                ? `
+            <div style="text-align:center;">
+              <a href="${voucherUrl}" target="_blank" style="display:inline-block;background:#374151;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">
+                Ver Boleta OXXO Generada →
+              </a>
+            </div>
+            `
+                : ""
+            }
+          </div>
+        `,
+      }),
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error en sendAdminOxxoPendingEmail:", error);
+  }
+}
+

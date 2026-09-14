@@ -58,9 +58,11 @@ export async function POST(req: Request) {
       if (matchFbc) fbc = decodeURIComponent(matchFbc[1]);
     }
 
+    const isMXN = currency === "mxn";
+
     const session = await stripe.checkout.sessions.create({
       mode: isSplitUSD ? "subscription" : "payment",
-      payment_method_types: ["card"],
+      payment_method_types: isMXN && !isSplitUSD ? ["card", "oxxo"] : ["card"],
       ...(isSplitUSD
         ? {
             subscription_data: {
@@ -76,17 +78,24 @@ export async function POST(req: Request) {
         : {
             adaptive_pricing: { enabled: true },
             customer_creation: "always",
-            ...(currencyConfig.allowsMSI
-              ? {
-                  payment_method_options: {
+            payment_method_options: {
+              ...(currencyConfig.allowsMSI
+                ? {
                     card: {
                       installments: {
                         enabled: true,
                       },
                     },
-                  },
-                }
-              : {}),
+                  }
+                : {}),
+              ...(isMXN
+                ? {
+                    oxxo: {
+                      expires_after_days: 3,
+                    },
+                  }
+                : {}),
+            },
           }),
       line_items: [
         {

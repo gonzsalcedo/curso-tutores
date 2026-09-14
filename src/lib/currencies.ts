@@ -62,7 +62,7 @@ export const CURRENCIES: Record<string, CurrencyConfig> = {
       totalRealValue: "$6,600+ MXN",
       officialPriceDisplay: "$1,490",
       currencySuffix: "MXN",
-      installmentsNote: "Se aceptan Meses Sin Intereses con tarjetas de crédito participantes",
+      installmentsNote: "Se aceptan Meses Sin Intereses con tarjetas y Efectivo en OXXO",
     },
   },
   usd: {

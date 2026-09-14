@@ -15,70 +15,101 @@ export default function StudentLoginPage() {
   const [success, setSuccess] = useState("");
   const [signingIn, setSigningIn] = useState(false);
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false);
+  const [oxxoPending, setOxxoPending] = useState<{
+    voucherUrl?: string | null;
+    voucherNumber?: string | null;
+    expiresAt?: number | null;
+    amount?: number | null;
+  } | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      if (params.get("checkout") === "success") {
+      const isSuccessParam = params.get("checkout") === "success";
+      const sessionId = params.get("session_id");
+
+      if (isSuccessParam && sessionId) {
+        // Consultar el estado real de la sesión antes de activar tracking o dar bienvenida de acceso
+        fetch(`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`)
+          .then((res) => res.json())
+          .then((sessionData) => {
+            if (sessionData.payment_status === "unpaid" && sessionData.isOxxo) {
+              // Boleta de OXXO generada: NO disparar pixel de compra ni activar acceso
+              setOxxoPending({
+                voucherUrl: sessionData.voucherUrl,
+                voucherNumber: sessionData.voucherNumber,
+                expiresAt: sessionData.expiresAt,
+                amount: sessionData.amountTotal,
+              });
+            } else {
+              // Pago con tarjeta completado
+              setIsCheckoutSuccess(true);
+              trackBrowserPurchase(sessionId, params);
+            }
+          })
+          .catch((err) => {
+            console.error("Error al consultar sesión de pago:", err);
+            setIsCheckoutSuccess(true);
+            trackBrowserPurchase(sessionId, params);
+          });
+      } else if (isSuccessParam) {
         setIsCheckoutSuccess(true);
-
-        const sessionId = params.get("session_id");
-        // Si hay sessionId y no se ha registrado previamente en esta sesión, disparar tracking de compra
-        if (sessionId && typeof window.sessionStorage !== "undefined") {
-          const deduplicationKey = `purchase_tracked_${sessionId}`;
-          if (!sessionStorage.getItem(deduplicationKey)) {
-            sessionStorage.setItem(deduplicationKey, "true");
-
-            const rawVal = params.get("val");
-            const purchaseValue = rawVal ? parseFloat(rawVal) : 1490;
-            const purchaseCurrency = (params.get("cur") || "MXN").toUpperCase();
-
-            // 1. Meta Pixel (Navegador) con eventID idéntico al de CAPI para deduplicación perfecta de Meta
-            try {
-              if (typeof (window as any).fbq === "function") {
-                (window as any).fbq(
-                  "track",
-                  "Purchase",
-                  {
-                    content_name: "Curso Digital Escalable",
-                    content_category: "Educacion Digital",
-                    content_type: "product",
-                    value: purchaseValue,
-                    currency: purchaseCurrency,
-                  },
-                  { eventID: sessionId }
-                );
-              }
-            } catch (err) {
-              console.error("Pixel Purchase error:", err);
-            }
-
-            // 2. Google Analytics 4 (GA4) evento estándar de ecommerce: purchase
-            try {
-              if (typeof (window as any).gtag === "function") {
-                (window as any).gtag("event", "purchase", {
-                  transaction_id: sessionId,
-                  value: purchaseValue,
-                  currency: purchaseCurrency,
-                  items: [
-                    {
-                      item_id: "curso-tutores",
-                      item_name: "Curso Digital Escalable",
-                      item_category: "Educacion Digital",
-                      price: purchaseValue,
-                      quantity: 1,
-                    },
-                  ],
-                });
-              }
-            } catch (err) {
-              console.error("GA4 Purchase error:", err);
-            }
-          }
-        }
       }
     }
   }, []);
+
+  function trackBrowserPurchase(sessionId: string, params: URLSearchParams) {
+    if (typeof window === "undefined" || typeof window.sessionStorage === "undefined") return;
+    const deduplicationKey = `purchase_tracked_${sessionId}`;
+    if (sessionStorage.getItem(deduplicationKey)) return;
+    sessionStorage.setItem(deduplicationKey, "true");
+
+    const rawVal = params.get("val");
+    const purchaseValue = rawVal ? parseFloat(rawVal) : 1490;
+    const purchaseCurrency = (params.get("cur") || "MXN").toUpperCase();
+
+    // 1. Meta Pixel (Navegador)
+    try {
+      if (typeof (window as any).fbq === "function") {
+        (window as any).fbq(
+          "track",
+          "Purchase",
+          {
+            content_name: "Curso Digital Escalable",
+            content_category: "Educacion Digital",
+            content_type: "product",
+            value: purchaseValue,
+            currency: purchaseCurrency,
+          },
+          { eventID: sessionId }
+        );
+      }
+    } catch (err) {
+      console.error("Pixel Purchase error:", err);
+    }
+
+    // 2. Google Analytics 4 (GA4)
+    try {
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "purchase", {
+          transaction_id: sessionId,
+          value: purchaseValue,
+          currency: purchaseCurrency,
+          items: [
+            {
+              item_id: "curso-tutores",
+              item_name: "Curso Digital Escalable",
+              item_category: "Educacion Digital",
+              price: purchaseValue,
+              quantity: 1,
+            },
+          ],
+        });
+      }
+    } catch (err) {
+      console.error("GA4 Purchase error:", err);
+    }
+  }
 
   useEffect(() => {
     if (!loading && user) {
@@ -148,6 +179,53 @@ export default function StudentLoginPage() {
         <p className="text-slate-400 text-sm mb-8">
           Inicia sesión para acceder a tu programa digital
         </p>
+
+        {/* Notificación de Ficha OXXO Generada (Pendiente de pago en caja) */}
+        {oxxoPending && (
+          <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-slate-900 border border-amber-500/40 text-left shadow-xl shadow-amber-500/10 animate-fade-in">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 text-base">
+                🏪
+              </span>
+              <h3 className="font-bold text-white text-base">
+                Ficha de Pago OXXO Generada
+              </h3>
+            </div>
+            <p className="text-amber-200/90 text-xs leading-relaxed mb-3">
+              Tienes hasta 3 días para acudir a cualquier tienda <strong>OXXO</strong> de México a liquidar tu inscripción en efectivo.
+            </p>
+
+            {oxxoPending.voucherNumber && (
+              <div className="mb-3 p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+                <div className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                  Referencia OXXO Pay
+                </div>
+                <div className="text-base font-mono font-extrabold text-amber-400 tracking-wider select-all">
+                  {oxxoPending.voucherNumber}
+                </div>
+              </div>
+            )}
+
+            {oxxoPending.voucherUrl && (
+              <a
+                href={oxxoPending.voucherUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-3 w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-slate-950 text-xs font-black transition-all shadow-lg shadow-amber-500/20"
+              >
+                <span>📄 Ver / Imprimir Código de Barras</span>
+                <span className="font-bold">→</span>
+              </a>
+            )}
+
+            <div className="text-[11px] text-amber-300/90 bg-amber-950/60 p-3 rounded-xl border border-amber-500/25 flex items-start gap-2">
+              <span className="mt-0.5">⚡</span>
+              <span className="leading-relaxed">
+                <strong>Activación Automática:</strong> En cuanto el cajero registre tu pago, tu acceso al aula se liberará de inmediato y recibirás tu correo de bienvenida.
+              </span>
+            </div>
+          </div>
+        )}
 
         {isCheckoutSuccess && (
           <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-slate-900 border border-emerald-500/40 text-left shadow-xl shadow-emerald-500/10 animate-fade-in">

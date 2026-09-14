@@ -51,7 +51,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
       const msiBadgeEl = document.getElementById("msi-badge");
       if (instNoteEl) {
         if (config.allowsMSI) {
-          instNoteEl.innerHTML = "Se aceptan <strong>Meses Sin Intereses</strong> con tarjetas de crédito participantes";
+          instNoteEl.innerHTML = "Se aceptan <strong>Meses Sin Intereses</strong> y <strong>Efectivo en OXXO</strong>";
           msiBadgeEl?.classList.remove("bg-slate-100", "text-slate-800", "border-slate-200");
           msiBadgeEl?.classList.add("bg-emerald-50", "text-emerald-900", "border-emerald-200");
         } else {
@@ -100,7 +100,7 @@ export default function LandingPageClient({ htmlContent }: Props) {
       }
       if (stickyNoteEl) {
         if (config.allowsMSI) {
-          stickyNoteEl.textContent = "Hasta MSI con tarjetas participantes";
+          stickyNoteEl.textContent = "Tarjetas (MSI) y Efectivo en OXXO";
         } else if (config.code === "usd" && usdPlan === "split_3" && config.hasSplitOption) {
           stickyNoteEl.textContent = "3 pagos diferidos de $55 USD";
         } else {
