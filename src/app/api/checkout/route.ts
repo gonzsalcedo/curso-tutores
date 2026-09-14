@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     const currencyConfig: CurrencyConfig = CURRENCIES[requestedCurrency] || CURRENCIES.mxn;
     const currency = currencyConfig.code;
 
-    // Plan diferido: solo disponible para USD (3 pagos de $130 USD)
+    // Plan diferido: solo disponible para USD (3 pagos de $55 USD)
     const isSplitUSD = currency === "usd" && body.plan === "split_3";
 
     const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_BASE_URL || "https://tutor.gonzsalcedo.com";
@@ -33,15 +33,15 @@ export async function POST(req: Request) {
       ? "Curso Digital Escalable - Plan 3 Pagos Mensuales"
       : "Curso Digital Escalable: Convierte lo que Sabes en Ingresos y Libertad";
     const productDesc = isSplitUSD
-      ? "Acceso completo e ilimitado de por vida. Pago dividido en 3 cuotas mensuales de $130 USD."
+      ? "Acceso completo e ilimitado de por vida. Pago dividido en 3 cuotas mensuales de $55 USD."
       : "Acceso completo e ilimitado de por vida al programa de creación y venta de cursos digitales.";
 
     const unitAmount = isSplitUSD
-      ? (currencyConfig.splitUnitAmount || 13000)
+      ? (currencyConfig.splitUnitAmount || 5500)
       : currencyConfig.unitAmount;
 
     const chargeAmountNumber = isSplitUSD
-      ? (currencyConfig.splitPrice || 130)
+      ? (currencyConfig.splitPrice || 55)
       : currencyConfig.price;
 
     // Extraer identificadores y cookies para atribución CAPI
